@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Send, Clock, BookOpen, Link } from "lucide-react";
+import { Send, Clock, Link } from "lucide-react";
 
 interface CounterAction {
   id: string;

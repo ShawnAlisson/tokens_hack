@@ -1,59 +1,111 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Activity, Cpu, Send, CheckCircle2, Zap } from "lucide-react";
+import { Search, Activity, Cpu, Send, CheckCircle2, Terminal, Zap, Settings } from "lucide-react";
 
 export type PipelineState = "idle" | "ingesting" | "reasoning" | "publishing" | "completed";
 
-interface AgentActivityEntry {
+export interface AgentActivityEntry {
   id: string;
+  tenant_id: string;
   agent: string;
   message: string;
   status: string;
   timestamp: string;
-}
-
-interface AgentHealth {
-  sentinel: { status: string; lastRun: string | null };
-  strategist: { status: string; lastRun: string | null };
-  actor: { status: string; lastRun: string | null };
-  x402: { status: string; lastRun: string | null };
+  meta?: Record<string, string | number>;
 }
 
 interface AgentWorkflowStripProps {
   pipelineState: PipelineState;
   refreshTrigger?: number;
+  isSyncing?: boolean;
 }
 
-const AGENTS = [
-  { key: "sentinel", label: "Sentinel", sub: "Sweep & classify", icon: Activity, stateKey: "ingesting" as const },
-  { key: "strategist", label: "Strategist", sub: "Senso + Vadalog", icon: Cpu, stateKey: "reasoning" as const },
-  { key: "actor", label: "Actor", sub: "Notion publish", icon: Send, stateKey: "publishing" as const },
-  { key: "x402", label: "x402", sub: "Micropayment", icon: Zap, stateKey: null },
+const STEPS = [
+  { key: "competitors", label: "Competitors", sub: "Fetching competitors", icon: Search },
+  { key: "threats", label: "Trends & Threats", sub: "Getting trends & threats", icon: Activity },
+  { key: "strategist", label: "Strategist", sub: "Formulating stance", icon: Cpu },
+  { key: "actor", label: "Actor", sub: "Publishing campaign", icon: Send },
 ];
 
-const STATE_ORDER: PipelineState[] = ["idle", "ingesting", "reasoning", "publishing", "completed"];
-
-function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-}
-
-function connectorProgress(fromIdx: number, pipelineState: PipelineState): number {
-  const current = STATE_ORDER.indexOf(pipelineState);
-  const fromState = fromIdx;
-  const toState = fromIdx + 1;
-
-  if (pipelineState === "completed") return 100;
-  if (current > toState) return 100;
-  if (current === toState) return 60;
-  if (current === fromState && pipelineState !== "idle") return 40;
+function getConnectorProgress(fromIdx: number, activeIdx: number): number {
+  if (activeIdx > fromIdx) return 100;
+  if (activeIdx === fromIdx) return 50;
   return 0;
 }
 
-export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: AgentWorkflowStripProps) {
+function formatTime(iso: string) {
+  try {
+    return new Date(iso).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  } catch {
+    return "";
+  }
+}
+
+const getAgentBadgeStyle = (agent: string) => {
+  switch (agent) {
+    case "sentinel":
+      return {
+        bg: "bg-teal-50 text-teal-700 border-teal-200/60",
+        label: "Sentinel",
+        icon: Search,
+      };
+    case "strategist":
+      return {
+        bg: "bg-violet-50 text-violet-700 border-violet-200/60",
+        label: "Strategist",
+        icon: Cpu,
+      };
+    case "actor":
+      return {
+        bg: "bg-emerald-50 text-emerald-700 border-emerald-200/60",
+        label: "Actor",
+        icon: Send,
+      };
+    case "x402":
+      return {
+        bg: "bg-amber-50 text-amber-700 border-amber-200/60",
+        label: "x402 Rail",
+        icon: Zap,
+      };
+    default:
+      return {
+        bg: "bg-slate-100 text-slate-700 border-slate-200",
+        label: "System",
+        icon: Settings,
+      };
+  }
+};
+
+export default function AgentWorkflowStrip({ pipelineState, refreshTrigger, isSyncing = false }: AgentWorkflowStripProps) {
+  const [activeIdx, setActiveIdx] = useState<number>(-1);
   const [entries, setEntries] = useState<AgentActivityEntry[]>([]);
-  const [health, setHealth] = useState<AgentHealth | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isSyncing) {
+      setActiveIdx(0);
+    } else if (pipelineState === "idle") {
+      setActiveIdx(-1);
+    } else if (pipelineState === "ingesting") {
+      setActiveIdx(0);
+    } else if (pipelineState === "reasoning") {
+      setActiveIdx(1);
+      // Simulate progress from Trends & Threats into Strategist reasoning
+      const timer = setTimeout(() => {
+        setActiveIdx(2);
+      }, 1200);
+      return () => clearTimeout(timer);
+    } else if (pipelineState === "publishing") {
+      setActiveIdx(3);
+    } else if (pipelineState === "completed") {
+      setActiveIdx(4); // All done
+    }
+  }, [pipelineState, isSyncing]);
 
   useEffect(() => {
     const sse = new EventSource("/api/dashboard/agent-log?stream=true");
@@ -63,89 +115,109 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
         const data = JSON.parse(e.data);
         if (data.type === "init") {
           setEntries(data.entries || []);
-          setHealth(data.health);
         } else if (data.type === "entry") {
-          setEntries((prev) => [data.entry, ...prev].slice(0, 30));
-          setHealth(data.health);
+          setEntries((prev) => {
+            if (prev.some((item) => item.id === data.entry.id)) return prev;
+            return [data.entry, ...prev].slice(0, 50);
+          });
         }
-      } catch {
-        // ignore
+      } catch (err) {
+        console.error("SSE parse error:", err);
       }
     };
 
-    return () => sse.close();
+    sse.onerror = (err) => {
+      console.error("SSE stream error:", err);
+      sse.close();
+    };
+
+    return () => {
+      sse.close();
+    };
   }, [refreshTrigger]);
 
   useEffect(() => {
-    if (logRef.current) logRef.current.scrollTop = 0;
+    if (logRef.current) {
+      logRef.current.scrollTop = 0;
+    }
   }, [entries]);
 
-  const isAgentActive = (key: string, stateKey: PipelineState | null) => {
-    if (stateKey && pipelineState === stateKey) return true;
-    if (key === "x402" && pipelineState === "completed") return true;
-    return health?.[key as keyof AgentHealth]?.status === "running";
+  const isStepActive = (idx: number) => {
+    return activeIdx === idx;
   };
 
-  const isAgentDone = (idx: number) => {
-    const current = STATE_ORDER.indexOf(pipelineState);
+  const isStepDone = (idx: number) => {
     if (pipelineState === "completed") return true;
-    return current > idx;
+    return activeIdx > idx;
   };
 
   return (
-    <div className="bc-panel-elevated rounded-2xl p-5 space-y-4 h-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+    <div className="bc-panel-elevated rounded-2xl p-5 space-y-5 h-full flex flex-col justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2 shrink-0">
         <div>
-          <h2 className="text-base font-bold text-slate-800" style={{ fontFamily: "var(--font-heading)" }}>
+          <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider" style={{ fontFamily: "var(--font-heading)" }}>
             Agent Workflow
           </h2>
-          <p className="text-xs text-slate-500">Live pipeline status and activity log</p>
+          <p className="text-xs text-slate-500">Live multi-agent execution pipeline</p>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 bc-pulse" />
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
           Agents online
         </div>
       </div>
 
-      {/* Pipeline: node — line — node — line — node — line — node */}
-      <div className="flex items-start w-full">
-        {AGENTS.map((agent, idx) => {
-          const Icon = agent.icon;
-          const active = isAgentActive(agent.key, agent.stateKey);
-          const done = isAgentDone(idx);
-          const agentHealth = health?.[agent.key as keyof AgentHealth];
-          const progress = idx < AGENTS.length - 1 ? connectorProgress(idx, pipelineState) : 0;
+      {/* Pipeline Strip */}
+      <div className="flex items-center w-full py-2 shrink-0">
+        {STEPS.map((step, idx) => {
+          const Icon = step.icon;
+          const active = isStepActive(idx);
+          const done = isStepDone(idx);
+          const progress = idx < STEPS.length - 1 ? getConnectorProgress(idx, activeIdx) : 0;
 
           return (
-            <div key={agent.key} className="flex items-start flex-1 min-w-0">
-              <div className="flex flex-col items-center gap-1 flex-shrink-0 w-full max-w-[88px] mx-auto">
+            <div key={step.key} className="flex items-center flex-1 min-w-0">
+              <div className="flex flex-col items-center gap-1.5 flex-shrink-0 w-full max-w-[96px] mx-auto group">
                 <div
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border-2 transition-all duration-300 ${
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center border-2 transition-all duration-500 relative ${
                     active
-                      ? "bg-teal-50 border-teal-500 shadow-lg shadow-teal-500/20"
+                      ? "bg-teal-50 border-teal-500 shadow-lg shadow-teal-500/25 scale-105"
                       : done
                       ? "bg-emerald-50 border-emerald-400"
                       : "bg-white border-slate-200"
                   }`}
                 >
-                  {done && !active ? (
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                  {/* Subtle active state outer glow ring */}
+                  {active && (
+                    <div className="absolute inset-0 rounded-2xl border border-teal-400 animate-ping opacity-25 pointer-events-none" />
+                  )}
+
+                  {done ? (
+                    <CheckCircle2 className="w-5.5 h-5.5 text-emerald-600" />
                   ) : (
-                    <Icon className={`w-6 h-6 ${active ? "text-teal-600 animate-pulse" : done ? "text-emerald-600" : "text-slate-400"}`} />
+                    <Icon className={`w-5.5 h-5.5 ${active ? "text-teal-600 animate-pulse" : "text-slate-400"}`} />
                   )}
                 </div>
-                <span className="text-[10px] sm:text-xs font-bold text-slate-700 text-center">{agent.label}</span>
-                <span className="text-[9px] text-slate-400 text-center hidden sm:block leading-tight">{agent.sub}</span>
-                {agentHealth?.lastRun && (
-                  <span className="text-[8px] text-slate-400 font-mono">{formatTime(agentHealth.lastRun)}</span>
-                )}
+                <div className="text-center">
+                  <span className={`text-[11px] font-bold block ${active ? "text-teal-600" : done ? "text-emerald-700" : "text-slate-700"}`}>
+                    {step.label}
+                  </span>
+                  <span className="text-[9px] text-slate-400 hidden md:block leading-tight font-medium">
+                    {active ? "Running..." : done ? "Completed" : step.sub}
+                  </span>
+                </div>
               </div>
 
-              {idx < AGENTS.length - 1 && (
-                <div className="flex-1 flex items-center pt-7 px-1 min-w-[12px]">
-                  <div className="w-full h-0.5 bg-slate-200 rounded-full overflow-hidden">
+              {/* Progress Connector line */}
+              {idx < STEPS.length - 1 && (
+                <div className="flex-1 flex items-center px-1 min-w-[8px]">
+                  <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-teal-500 rounded-full transition-all duration-500"
+                      className={`h-full rounded-full transition-all duration-700 ${
+                        progress === 100 ? "bg-emerald-400" : "bg-teal-500 animate-pulse"
+                      }`}
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -156,34 +228,61 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
         })}
       </div>
 
-      <div className="bc-muted rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-3 py-2 border-b border-slate-200 flex items-center justify-between">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Activity log</span>
-          <span className="text-[10px] text-teal-600 font-medium">Live</span>
+      {/* Live Activity Log Container */}
+      <div className="bc-muted rounded-xl border border-slate-200/60 overflow-hidden flex flex-col h-[166px] shrink-0 animate-slide-up">
+        <div className="px-3.5 py-2 border-b border-slate-200/60 flex items-center justify-between shrink-0 bg-slate-50/70">
+          <div className="flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-teal-600 animate-pulse" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600" style={{ fontFamily: "var(--font-heading)" }}>
+              Engine Live Execution Trace
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-50 border border-teal-100">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-teal-500"></span>
+            </span>
+            <span className="text-[9px] text-teal-600 font-bold uppercase tracking-wider">Streaming</span>
+          </div>
         </div>
-        <div ref={logRef} className="max-h-[100px] overflow-y-auto divide-y divide-slate-100">
+
+        <div 
+          ref={logRef} 
+          className="overflow-y-auto divide-y divide-slate-100 h-[128px] shrink-0 bg-white/40"
+          style={{ scrollBehavior: "smooth" }}
+        >
           {entries.length > 0 ? (
-            entries.slice(0, 8).map((entry) => (
-              <div key={entry.id} className="px-3 py-1.5 flex items-start gap-2 text-xs">
-                <span className="text-slate-400 font-mono text-[10px] shrink-0 pt-0.5">
-                  {formatTime(entry.timestamp)}
-                </span>
-                <span className={`font-semibold shrink-0 capitalize ${
-                  entry.agent === "sentinel" ? "text-teal-600" :
-                  entry.agent === "strategist" ? "text-violet-600" :
-                  entry.agent === "actor" ? "text-emerald-600" :
-                  entry.agent === "x402" ? "text-orange-600" :
-                  "text-slate-500"
-                }`}>
-                  [{entry.agent}]
-                </span>
-                <span className="text-slate-600 leading-snug">{entry.message}</span>
-              </div>
-            ))
+            entries.map((entry, idx) => {
+              const badge = getAgentBadgeStyle(entry.agent);
+              const AgentIcon = badge.icon;
+              return (
+                <div 
+                  key={entry.id} 
+                  className={`px-3.5 py-2 flex items-start gap-2.5 text-xs hover:bg-slate-50/50 transition-colors duration-200 h-[32px] shrink-0 ${
+                    idx === 0 ? "animate-fade-in bg-teal-50/10" : ""
+                  }`}
+                >
+                  <span className="text-slate-400 font-mono text-[9px] shrink-0 pt-0.5">
+                    {formatTime(entry.timestamp)}
+                  </span>
+                  <div className={`inline-flex items-center gap-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded-md border shrink-0 leading-none ${badge.bg}`}>
+                    <AgentIcon className="w-2.5 h-2.5" />
+                    {badge.label}
+                  </div>
+                  <span className="text-slate-600 leading-none truncate font-medium">
+                    {entry.message}
+                  </span>
+                </div>
+              );
+            })
           ) : (
-            <p className="px-3 py-4 text-xs text-slate-400 text-center">
-              Waiting for agent activity. Trigger a strike on a threat below.
-            </p>
+            <div className="flex flex-col items-center justify-center h-full py-4 text-center px-4">
+              <span className="w-2 h-2 rounded-full bg-slate-300 animate-pulse mb-1" />
+              <p className="text-[11px] font-semibold text-slate-500">Waiting for agent activity...</p>
+              <p className="text-[9px] text-slate-400 max-w-[240px] mt-0.5">
+                Trigger a strike below to watch the autonomous execution.
+              </p>
+            </div>
           )}
         </div>
       </div>

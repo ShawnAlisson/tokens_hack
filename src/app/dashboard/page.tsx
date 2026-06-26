@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   Calendar, Zap, FileText, Copy, ExternalLink,
-  ShieldCheck, Flame, ChevronDown, Loader2, LogOut,
+  ShieldCheck, Flame, ChevronDown, Loader2, LogOut, RefreshCw,
 } from "lucide-react";
 import BrandOnboarding from "./components/BrandOnboarding";
 import AgentWorkflowStrip, { type PipelineState } from "./components/AgentWorkflowStrip";
@@ -90,6 +90,24 @@ export default function Dashboard() {
     setTenant(null);
     setActiveBrief(null);
     setPipelineState("idle");
+  };
+
+  const handleReset = async () => {
+    if (!confirm("Are you sure you want to completely reset all site data and start fresh? This will clear all competitor strikes and restore the system to its initial state.")) return;
+    try {
+      await fetch("/api/dashboard/reset", { method: "POST" });
+      localStorage.removeItem("brandcompete_onboarded");
+      localStorage.removeItem("brandcompete_tenant");
+      setShowTenantMenu(false);
+      setOnboarded(false);
+      setTenant(null);
+      setActiveBrief(null);
+      setPipelineState("idle");
+      showToast("Site data reset! Let's start fresh.", "success");
+    } catch (e) {
+      console.error("Reset failed:", e);
+      showToast("Reset failed", "error");
+    }
   };
 
   const showToast = (message: string, type: "success" | "error" = "success") => {
@@ -208,6 +226,13 @@ export default function Dashboard() {
                   <LogOut className="w-4 h-4" />
                   Switch brand
                 </button>
+                <button
+                  onClick={handleReset}
+                  className="w-full text-left px-3 py-2.5 text-sm text-amber-600 hover:bg-amber-50 flex items-center gap-2 font-medium border-t border-slate-100"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Reset & Start Fresh
+                </button>
               </div>
             )}
           </div>
@@ -220,7 +245,7 @@ export default function Dashboard() {
 
       {/* Row 1: Agent Workflow | Brand Context */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
-        <AgentWorkflowStrip pipelineState={pipelineState} refreshTrigger={refreshTrigger} />
+        <AgentWorkflowStrip pipelineState={pipelineState} refreshTrigger={refreshTrigger} isSyncing={syncing} />
         <BrandContextPanel refreshTrigger={refreshTrigger} syncing={syncing} onResync={runAgentSync} />
       </div>
 
@@ -250,12 +275,12 @@ export default function Dashboard() {
           />
         </div>
         <div className="h-[380px]">
-          <div className="bc-panel rounded-2xl p-5 h-full">
-            <CompetitorWatchlist
-              refreshTrigger={refreshTrigger}
-              onSelectCompetitor={setSelectedCompetitor}
-            />
-          </div>
+          <CompetitorWatchlist
+            refreshTrigger={refreshTrigger}
+            onSelectCompetitor={setSelectedCompetitor}
+            pipelineState={pipelineState}
+            isSyncing={syncing}
+          />
         </div>
       </div>
 
