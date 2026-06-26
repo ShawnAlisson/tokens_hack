@@ -1,6 +1,25 @@
 [
   {
     "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_zo16hj43",
+    "timestamp": "2026-06-26T14:59:54.605Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_wzivjvwi",
+    "timestamp": "2026-06-26T14:59:45.386Z"
+  },
+  {
+    "tenant_id": "gymshark",
     "agent": "x402",
     "message": "Micropayment captured — $0.49 USD intelligence fee",
     "status": "success",

@@ -1,0 +1,15 @@
+{
+  "content_hash": "09450b704b011028",
+  "title": "Lululemon announces UK-wide loyalty program with free next-day shipping",
+  "snippet": "Lululemon is testing a membership beta in major UK cities, offering free express delivery and priority access to limited edition drops, intensifying conversion competition.",
+  "classification": {
+    "severity": "medium",
+    "category": "brand_campaign",
+    "summary": "Lululemon is launching a UK-wide loyalty program featuring free next-day shipping and priority access to limited editions, aiming to enhance customer retention. This initiative represents a strategic expansion of their brand engagement efforts in key markets."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this. The user wants me to classify the competitor news about Lululemon's UK loyalty program. First, I need to determine the severity. The news mentions a loyalty program with free next-day shipping and priority access to limited editions. Since they're testing a membership beta in major</think>\n\n{\n  \"severity\": \"medium\",\n  \"category\": \"brand_campaign\",\n  \"summary\": \"Lululemon is launching a UK-wide loyalty program featuring free next-day shipping and priority access to limited editions, aiming to enhance customer retention. This initiative represents a strategic expansion of their brand engagement efforts in key markets.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T14:41:02.711Z"
+}

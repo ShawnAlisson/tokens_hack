@@ -1,0 +1,15 @@
+{
+  "content_hash": "cf7230a1d5c5c902",
+  "title": "Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale",
+  "snippet": "Lululemon Athletica has launched an aggressive 48-hour promotional campaign across the UK, pricing flagship leggings at £58 (down from £78) with prominent Google search ads.",
+  "classification": {
+    "severity": "high",
+    "category": "pricing",
+    "summary": "Lululemon Athletica is conducting a 48-hour flash sale in the UK, significantly reducing the price of its flagship Align pants by 22%. This aggressive pricing strategy targets cost-sensitive consumers and could disrupt market dynamics for competing activewear brands."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this query. The user wants me to act as a market intelligence classifier for retail brand analysts. The task is to analyze a competitor's news event and classify it into severity, category, and summary.\n\nFirst, the title is \"Lululemon slashes UK Align pants pricing by </think>\n\n{\n  \"severity\": \"high\",\n  \"category\": \"pricing\",\n  \"summary\": \"Lululemon Athletica is conducting a 48-hour flash sale in the UK, significantly reducing the price of its flagship Align pants by 22%. This aggressive pricing strategy targets cost-sensitive consumers and could disrupt market dynamics for competing activewear brands.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T14:35:28.810Z"
+}

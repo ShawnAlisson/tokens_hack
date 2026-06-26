@@ -1,0 +1,15 @@
+{
+  "content_hash": "8c119fb52eeea129",
+  "title": "UK Sportswear and Performancewear Market Report 2026",
+  "snippet": "The larger sports brands/retailers are facing intense competition as disruptor brands grow spend and customers at a faster rate. More agile brands like Hoka, On Running and Lululemon are outperforming the market, benefiting from building strong fitness communities. The rising popularity of outdoor activities such as hiking has benefited brands such as Craghoppers and Passenger Clothing. [...] Rising popularity of newer sports such as padel and indoor climbing is creating a need for specific sportswear.\n Sustainability – growing awareness of toxicity of some performancewear materials such as PFAS and microplastic shedding from use of plastic based materials such as polyester. It is also about impact on an individual’s health and wellbeing, which is becoming more important to people.\n Rising interest in more circular services such as repairs and rental with a demand for being able to send products back to be repaired. There is also interest in rental for sports that are only done occasionally (eg snowsports and surfing). [...] Sportswear and performancewear are increasingly used as everyday wear and not just for specific sports/activities, so there is a need to consider the intended use of product for the customer.\n Where people buy sportswear from – not just sports retailers and brands, as fashion retailers are growing their focus on the category with sports specific items. There is also the rise of lifestyle retailers such as Alo Yoga and Gymshark.\n Rise of sportswear and activewear subcultures particularly for younger people – different brands associate with different sports and community groups eg running clubs. People like to align themselves with the brands they wear as well as the sports/activities they take part in.",
+  "classification": {
+    "severity": "medium",
+    "category": "brand_campaign",
+    "summary": "Disruptor brands are outperforming traditional sports retailers by building strong fitness communities and adapting to emerging sports trends. The market is seeing increased focus on sustainability, circular services, and the blurring of sportswear with everyday wear, influencing brand strategies."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this classification task. The user provided a news snippet about the UK sportswear market and wants me to classify it into severity, category, and summary.\n\nFirst, the severity. The snippet mentions disruptor brands like Hoka, On Running, and Lululemon outperforming</think>\n\n{\n  \"severity\": \"medium\",\n  \"category\": \"brand_campaign\",\n  \"summary\": \"Disruptor brands are outperforming traditional sports retailers by building strong fitness communities and adapting to emerging sports trends. The market is seeing increased focus on sustainability, circular services, and the blurring of sportswear with everyday wear, influencing brand strategies.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T15:01:01.197Z"
+}

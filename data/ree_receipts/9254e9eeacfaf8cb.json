@@ -1,0 +1,15 @@
+{
+  "content_hash": "9254e9eeacfaf8cb",
+  "title": "Nike UK launches 'Infinite Sweat' eco-engineered running sets at high premium",
+  "snippet": "Nike's London outlets are rolling out carbon-neutral functional training shirts using recycled ocean plastics, accompanied by heavy influencer endorsements.",
+  "classification": {
+    "severity": "high",
+    "category": "product_launch",
+    "summary": "Nike UK has launched eco-engineered running sets made from recycled ocean plastics, targeting sustainability and featuring influencer endorsements. This high-premium product release positions Nike as a leader in sustainable activewear, potentially disrupting market dynamics."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this. The user wants me to classify a competitor's news event as a market intelligence analyst. The title is \"Nike UK launches 'Infinite Sweat' eco-engineered running sets at high premium\" and the snippet says they're rolling out carbon-neutral functional training shirts using recycled ocean plastics</think>\n\n{\n  \"severity\": \"high\",\n  \"category\": \"product_launch\",\n  \"summary\": \"Nike UK has launched eco-engineered running sets made from recycled ocean plastics, targeting sustainability and featuring influencer endorsements. This high-premium product release positions Nike as a leader in sustainable activewear, potentially disrupting market dynamics.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T14:37:24.492Z"
+}

@@ -87,7 +87,7 @@ export default function PublishedActions({ refreshTrigger, selectedActionId, onS
                     onClick={(e) => e.stopPropagation()}
                     className="text-[9px] text-teal-600 font-bold flex items-center gap-1"
                   >
-                    <Link className="w-3 h-3" /> Notion
+                    <Link className="w-3 h-3" /> cited.md
                   </a>
                 </div>
               </div>

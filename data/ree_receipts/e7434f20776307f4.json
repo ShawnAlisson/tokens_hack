@@ -1,0 +1,15 @@
+{
+  "content_hash": "e7434f20776307f4",
+  "title": "ASOS 4505 launches £16 budget seamless gym legging duplicates on social media",
+  "snippet": "ASOS is aggressively expanding its activewear private label, releasing squat-proof seamless gym leggings at an entry price of £16, specifically targeting UK Gen-Z consumers on TikTok.",
+  "classification": {
+    "severity": "high",
+    "category": "product_launch",
+    "summary": "ASOS is launching budget-friendly seamless gym leggings at £16 as part of its aggressive expansion into activewear. The product targets UK Gen-Z consumers on TikTok, posing a significant competitive threat due to its low price point and direct social media focus."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this. The user wants me to classify the competitor news about ASOS launching budget gym leggings. First, I need to determine the severity. The key points here are \"aggressively expanding activewear private label\" and \"entry price of £16\". They're targeting Gen-Z</think>\n\n{\n  \"severity\": \"high\",\n  \"category\": \"product_launch\",\n  \"summary\": \"ASOS is launching budget-friendly seamless gym leggings at £16 as part of its aggressive expansion into activewear. The product targets UK Gen-Z consumers on TikTok, posing a significant competitive threat due to its low price point and direct social media focus.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T14:39:15.742Z"
+}

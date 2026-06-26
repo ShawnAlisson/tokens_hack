@@ -132,7 +132,7 @@ export default function Dashboard() {
       setPipelineState("publishing");
       const data = await res.json();
       setPipelineState("completed");
-      showToast("Campaign published to Notion!", "success");
+      showToast("Campaign published to cited.md!", "success");
       setRefreshTrigger((p) => p + 1);
 
       if (data.plan && data.publish) {
@@ -304,7 +304,7 @@ export default function Dashboard() {
           <div className="border border-emerald-200 bg-emerald-50/50 rounded-xl p-5 space-y-4 animate-fade-in">
             <div className="flex items-center justify-between">
               <span className="text-[10px] bg-emerald-600 text-white font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Generated Brief</span>
-              <span className="text-[10px] text-emerald-600 font-medium">Synced with Notion</span>
+              <span className="text-[10px] text-emerald-600 font-medium">Published on cited.md</span>
             </div>
             <h3 className="text-lg font-bold text-slate-900">{parsedBrief.name}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -341,7 +341,7 @@ export default function Dashboard() {
                 ))}
               </div>
               <a href={activeBrief.published_url} target="_blank" rel="noreferrer" className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5">
-                <ExternalLink className="w-3.5 h-3.5" /> View Notion Page
+                <ExternalLink className="w-3.5 h-3.5" /> View on cited.md
               </a>
             </div>
           </div>
