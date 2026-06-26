@@ -1,0 +1,24 @@
+# config/tavily_profiles.yaml
+# Query templates for each profile type used by Sentinel
+
+profiles:
+  brand_mentions:
+    query_template: '"{brand_name}" UK brand feedback reviews news PR'
+    days_back: 7
+    search_depth: "advanced"
+  competitor_launches:
+    query_template: '"{competitor_name}" new product launch release feature announcement'
+    days_back: 14
+    search_depth: "advanced"
+  competitor_pricing:
+    query_template: '"{competitor_name}" price change discount sale cost subscription'
+    days_back: 7
+    search_depth: "advanced"
+  market_trends:
+    query_template: '"{market}" UK market trends industry insights competitor analysis 2026'
+    days_back: 30
+    search_depth: "advanced"
+  comparison_content:
+    query_template: '"{brand_name}" vs "{competitor_name}" comparison review alternative'
+    days_back: 30
+    search_depth: "advanced"

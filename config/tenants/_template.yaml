@@ -1,0 +1,26 @@
+# White-Label Tenant Configuration Template
+# To onboard a new brand, copy this file to {brand_id}.yaml and fill in the values below.
+
+id: tenant_id                    # Uniquely identifies the tenant, matches filename (e.g. nike)
+display_name: Tenant Brand Name  # Human readable brand name shown in dashboard (e.g. Nike)
+domain: tenantbrand.com          # Primary brand domain
+logo_url: https://...            # Image URL for the brand's logo
+market: Market Segment           # Description of market focus (e.g. UK Footwear / Retail)
+
+competitors:
+  - name: Competitor One
+    domains: [competitor1.co.uk, competitor1.com]
+  - name: Competitor Two
+    domains: [competitor2.com]
+
+owned_publish_channel:
+  type: notion
+  database_id: ${NOTION_DATABASE_ID}   # Kept in server-side .env file only
+  workspace_url: https://notion.so/...
+
+tavily_search_profiles:
+  - brand_mentions
+  - competitor_launches
+  - competitor_pricing
+  - market_trends
+  - comparison_content

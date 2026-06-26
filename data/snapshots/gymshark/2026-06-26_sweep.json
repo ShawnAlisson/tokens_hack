@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Lululemon slashes Align leggings pricing by 15% across UK e-commerce",
+    "url": "https://www.lululemon.co.uk/en-gb/p/align-high-rise-pant-25/prod10480023.html",
+    "snippet": "Lululemon has updated their price points for the signature Align legging line in the UK from £88 to £74.80. This unexpected discount is being promoted on several activewear comparison blogs.",
+    "score": 0.92,
+    "competitor": "Lululemon",
+    "source_type": "pricing"
+  },
+  {
+    "title": "Lululemon launches bio-nylon premium clothing range in London flagship stores",
+    "url": "https://www.retailgazette.co.uk/blog/2026/06/lululemon-bio-nylon/",
+    "snippet": "Lululemon Athletica is rolling out an eco-friendly bio-synthetic clothing capsule across selected London stores using 100% plant-based nylons, directly challenging competitor eco-campaigns.",
+    "score": 0.88,
+    "competitor": "Lululemon",
+    "source_type": "launch"
+  },
+  {
+    "title": "Nike UK launches 48-hour flash sale with up to 40% off Training Gear",
+    "url": "https://www.nike.com/uk/w/mens-sale-gym-training-37v78z5e1x6z5e1x",
+    "snippet": "Nike UK has launched a high-impact summer training flash sale. Running shorts, moisture-wicking tees, and training shoes are heavily discounted.",
+    "score": 0.94,
+    "competitor": "Nike",
+    "source_type": "pricing"
+  },
+  {
+    "title": "ASOS 4505 private-label activewear expanded with £18 budget gym leggings",
+    "url": "https://www.asos.com/women/activewear/asos-4505-activewear-launch",
+    "snippet": "ASOS expands its budget activewear collection, ASOS 4505. They are launching seamless high-rise leggings at £18, targeted directly at Gen-Z social media users.",
+    "score": 0.82,
+    "competitor": "ASOS",
+    "source_type": "comparison"
+  }
+]

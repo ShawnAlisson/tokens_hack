@@ -1,0 +1,239 @@
+{
+  "competitor_events": [
+    {
+      "id": "evt_az8h7mk70udwvxbk5dw7eh",
+      "inserted_at": "2026-06-26T04:25:18.067Z",
+      "url_hash": "19016047a6eb951371feafd2f83fb749",
+      "processed": true,
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "source_type": "pricing",
+      "severity": "high",
+      "url": "https://www.lululemon.co.uk/en-gb/p/align-high-rise-pant-25/prod10480023.html",
+      "title": "Lululemon slashes Align leggings pricing by 15% across UK e-commerce",
+      "snippet": "Lululemon has updated their price points for the signature Align legging line in the UK from £88 to £74.80. This unexpected discount is being promoted on several activewear comparison blogs and marks a strategic move to capture market share ahead of the summer gym season."
+    },
+    {
+      "id": "evt_urtvcggketeks4fnx9k9i",
+      "inserted_at": "2026-06-25T02:53:46.067Z",
+      "url_hash": "2aa4435f0d5b976cac8a5a594b66db68",
+      "processed": true,
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "source_type": "launch",
+      "severity": "medium",
+      "url": "https://www.retailgazette.co.uk/blog/2026/06/lululemon-bio-nylon/",
+      "title": "Lululemon launches bio-nylon premium clothing range in London flagship stores",
+      "snippet": "Lululemon Athletica is rolling out an eco-friendly bio-synthetic clothing capsule across selected London stores. Promoted under their carbon-neutral commitment, this premium activewear collection uses 100% plant-based nylons, directly challenging competitor eco-campaigns."
+    },
+    {
+      "id": "evt_iep71blsihn24v7oqtvtcp",
+      "inserted_at": "2026-06-24T10:04:09.067Z",
+      "url_hash": "a1051d153776a9a7088f66e9a67570e2",
+      "processed": true,
+      "tenant_id": "gymshark",
+      "competitor": "Nike",
+      "source_type": "pricing",
+      "severity": "high",
+      "url": "https://www.nike.com/uk/w/mens-sale-gym-training-37v78z5e1x6z5e1x",
+      "title": "Nike UK launches 48-hour flash sale with up to 40% off Training Gear",
+      "snippet": "Nike UK has launched a high-impact summer training flash sale. Running shorts, moisture-wicking tees, and training shoes are heavily discounted. Early traffic charts show a major surge in online purchases from gymgoers in key metropolitan areas."
+    },
+    {
+      "id": "evt_lxg8o5bn21ekj5il040lk",
+      "inserted_at": "2026-06-23T04:05:02.067Z",
+      "url_hash": "aab6fe59455a8a4dec02a3a38960c903",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Nike",
+      "source_type": "launch",
+      "severity": "medium",
+      "url": "https://www.nike.com/uk/launch/t/metcon-9-premium-edition",
+      "title": "Nike Metcon 9 UK launch features customized team color options",
+      "snippet": "Nike introduces the premium custom-engineered Metcon 9 training shoes in the UK market. The shoe targets professional lifting gyms and Crossfit affiliates with customized colourways and personalized heel-clip configurations."
+    },
+    {
+      "id": "evt_8500drdk5v8kkb1e3zwvi",
+      "inserted_at": "2026-06-21T23:43:58.067Z",
+      "url_hash": "e15993a772724e951643261660b97b07",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "ASOS",
+      "source_type": "comparison",
+      "severity": "medium",
+      "url": "https://www.asos.com/women/activewear/asos-4505-activewear-launch",
+      "title": "ASOS 4505 private-label activewear expanded with £18 budget gym leggings",
+      "snippet": "ASOS expands its budget activewear collection, ASOS 4505. They are launching seamless high-rise leggings at £18, targeted directly at Gen-Z social media users. Influencer reviews are highlighting the squat-proof fabric and low cost compared to premium brands."
+    },
+    {
+      "id": "evt_mgnwf1qhy80ejj2cepywt",
+      "inserted_at": "2026-06-21T02:49:35.067Z",
+      "url_hash": "5d4a6bd0ce99ec3ab1f63ac58b938a6f",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Adidas",
+      "source_type": "launch",
+      "severity": "low",
+      "url": "https://www.adidas.co.uk/stella_mccartney",
+      "title": "Adidas by Stella McCartney launches recycled earth-tone collection",
+      "snippet": "Adidas releases its new seasonal premium collection with designer Stella McCartney in the UK. The collection focuses on high-end ocean plastics and minimalist earth tones, combining fashion aesthetics with high-performance running silhouettes."
+    },
+    {
+      "id": "evt_otv3cw3mgcnqhhglmzpbe",
+      "inserted_at": "2026-06-20T02:11:22.067Z",
+      "url_hash": "cc56db2704a178184a6244320616943f",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Under Armour",
+      "source_type": "trend",
+      "severity": "low",
+      "url": "https://www.drapers.co.uk/news/under-armour-uk-logistics-update",
+      "title": "Under Armour resolves UK distribution center delays, launching restock",
+      "snippet": "Under Armour has resolved its supply chain and shipping delays at its primary UK fulfillment hub. Store inventories across London and Manchester are being restocked with training garments and cold-weather baselayers."
+    },
+    {
+      "id": "evt_25njn6jb4sb3s2g904zq6",
+      "inserted_at": "2026-06-19T13:26:49.067Z",
+      "url_hash": "55f6887dbc3fb8bc92ef75d3e3bd013b",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "source_type": "comparison",
+      "severity": "medium",
+      "url": "https://www.cosmopolitan.com/uk/fashion/style/g3422/best-gym-leggings-reviews/",
+      "title": "Cosmopolitan UK ranks Lululemon Align vs Gymshark Adapt leggings",
+      "snippet": "Cosmopolitan editors publish their ultimate 2026 workout leggings breakdown. Lululemon is praised for extreme comfort and second-skin feel, while Gymshark is commended for muscle support, waistband hold, and value for money."
+    },
+    {
+      "id": "evt_tjaw6pzk7929earn72vbk",
+      "inserted_at": "2026-06-18T12:21:10.067Z",
+      "url_hash": "6d3c918562094f80de6d5f7aad6ebdb3",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Nike",
+      "source_type": "mention",
+      "severity": "medium",
+      "url": "https://www.instagram.com/nike-uk-running-community/",
+      "title": "Nike Running Club UK launches London summer running hub",
+      "snippet": "Nike UK Runner communities on social media report heavy interest in Nike's weekend street-training clubs. The club offers free tracking sensors, pacing maps, and branded community moisture-wicking shirts to active attendees."
+    },
+    {
+      "id": "evt_92f30p4nu8wlwhm7imyui",
+      "inserted_at": "2026-06-17T16:41:36.067Z",
+      "url_hash": "9efb68a212f01f1db5f18945331cc8d7",
+      "processed": false,
+      "tenant_id": "gymshark",
+      "competitor": "Adidas",
+      "source_type": "pricing",
+      "severity": "low",
+      "url": "https://www.adidas.co.uk/sale-gym-accessories",
+      "title": "Adidas UK rolls out 15% discount on running socks and water bottles",
+      "snippet": "Adidas offers checkout-basket discounts on minor fitness gear, workout towels, and gym sacks. A tactical pricing tweak designed to clear excess accessory inventory."
+    },
+    {
+      "id": "evt_r3t3jn743qh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "source_type": "pricing",
+      "severity": "high",
+      "url": "https://www.lululemon.co.uk/en-gb/p/align-high-rise-pant-25/prod10480023.html",
+      "url_hash": "ed0672fefd05962d13da46cd197c829c",
+      "title": "Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale",
+      "snippet": "Lululemon Athletica has launched an aggressive 48-hour promotional campaign across the UK, pricing flagship leggings at £58 (down from £78) with prominent Google search ads.",
+      "inserted_at": "2026-06-26T12:21:31.806Z",
+      "processed": true
+    }
+  ],
+  "counter_actions": [
+    {
+      "id": "act_ua1w65j30inztsg9g5ghi",
+      "event_id": "evt_az8h7mk70udwvxbk5dw7eh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon slashes Align leggings pricing by 15% across UK e-commerce",
+      "strategy_angle": "Value-Driven Multi-Pack Bundle Campaign",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Double the Fit, Real Value\"\n\n#### Trigger:\nLululemon slashes Align leggings pricing to £74.80 in the UK.\n\n#### Strategic Brand Stance:\nLululemon is trying to lower prices, but they are still perceived as expensive single items. Gymshark should strike back with our Core USP: high-quality durability, style, and unmatched value via a multi-buy bundle.\n\n#### Counter-Content Copy Draft:\n\"Premium shouldn't mean overpriced. Why buy one pair of leggings when you can get two that last twice as long? Get 2 Gymshark Everyday Seamless Leggings for £60 today. Built for sweat. Styled for life. No compromises.\"\n\n#### Distribution Channel:\nPublished to Gymshark UK Hub, Social Media channels (TikTok/Instagram Ads targeting UK activewear shoppers).",
+      "published_url": "https://notion.so/gymshark-workspace/lululemon-align-price-cut-counter-strike-1a2b3c4f",
+      "notion_page_id": "notion_page_99812736",
+      "latency_ms": 1250,
+      "published_at": "2026-06-26T04:04:27.068Z"
+    },
+    {
+      "id": "act_lwnk70xo8yd4bbff4q4ht6",
+      "event_id": "evt_urtvcggketeks4fnx9k9i",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon launches bio-nylon premium clothing range in London flagship stores",
+      "strategy_angle": "Highlight Existing Sustainable Recycled Lines",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Our Planet, Our Gym\"\n\n#### Trigger:\nLululemon introduces plant-based nylons capsule in premium London storefronts.\n\n#### Strategic Brand Stance:\nLululemon is treating sustainability as a premium luxury feature. Gymshark believes eco-friendly high-performance gear should be accessible to everyone. We will highlight our existing recycled polyester lines.\n\n#### Counter-Content Copy Draft:\n\"Real athletes care about the planet. That's why sustainable workout gear shouldn't be locked behind a luxury paywall. Our Recycled Seamless range features 85% eco-friendly yarn starting at £28. Because green energy belongs in every workout.\"\n\n#### Distribution Channel:\nEmail newsletter segment to UK customer base, Organic Instagram Carousel.",
+      "published_url": "https://notion.so/gymshark-workspace/lululemon-bio-nylon-counter-campaign-2b3c4d5e",
+      "notion_page_id": "notion_page_11223344",
+      "latency_ms": 1840,
+      "published_at": "2026-06-25T00:09:30.068Z"
+    },
+    {
+      "id": "act_kdrv0s9piuastvfog321",
+      "event_id": "evt_iep71blsihn24v7oqtvtcp",
+      "tenant_id": "gymshark",
+      "competitor": "Nike",
+      "trigger_title": "Nike UK launches 48-hour flash sale with up to 40% off Training Gear",
+      "strategy_angle": "Affiliate Community Free Delivery & Accessories Hook",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Complete the Fit\"\n\n#### Trigger:\nNike launching a 48h 40% flash sale.\n\n#### Strategic Brand Stance:\nRather than starting a price war, we will hijack Nike's checkout frenzy by offering a free accessory bundle (socks + shaker) and free shipping on all orders over £35, cross-promoting our new arrivals.\n\n#### Counter-Content Copy Draft:\n\"Spotted Nike's sale? Upgrade your gym bag with the final touches. Get a FREE Gymshark shaker and crew socks with every order. No code needed. Added automatically at checkout. Speed through your reps.\"\n\n#### Distribution Channel:\nPush Notification via Gymshark iOS App, TikTok Banner Ad.",
+      "published_url": "https://notion.so/gymshark-workspace/nike-flash-sale-hijack-3c4d5e6f",
+      "notion_page_id": "notion_page_55667788",
+      "latency_ms": 980,
+      "published_at": "2026-06-24T15:51:38.068Z"
+    },
+    {
+      "id": "act_9j1vc7ygqtu3um6r8np05s",
+      "event_id": "evt_r3t3jn743qh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale",
+      "strategy_angle": "Affiliate Community Free Delivery & Accessories Hook",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Complete the Gym bag\"\n\n#### Trigger:\nLululemon launches a flash sale campaign: \"Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale\".\n\n#### Strategic Brand Stance:\nHijack checkout attention by offering immediate complimentary value on smaller accessories (free crew socks & shaker) combined with free next-day delivery on all purchases above £35.\n\n#### Counter-Content Copy Draft:\n\"Spotted Lululemon's sale? Upgrade your gym bag with the final touches. Get a FREE Gymshark shaker and crew socks with every order. No code needed. Added automatically at checkout. Speed through your reps.\"\n\n#### Distribution Channel:\nPush Notifications via Gymshark iOS App and Google Ad banners.",
+      "published_url": "https://notion.so/gymshark-workspace/affiliate-community-free-delivery-accessories-hook-yqrswna2",
+      "notion_page_id": "notion_page_yqrswna2",
+      "latency_ms": 0,
+      "published_at": "2026-06-26T12:21:32.110Z"
+    }
+  ],
+  "revenue_events": [
+    {
+      "id": "rev_97jfqczlq2fg9h7j01qmi",
+      "event_id": "evt_az8h7mk70udwvxbk5dw7eh",
+      "amount_usd": 0.01,
+      "timestamp": "2026-06-25T23:45:44.068Z"
+    },
+    {
+      "id": "rev_c85y1adf177u246t56ila",
+      "event_id": "evt_urtvcggketeks4fnx9k9i",
+      "amount_usd": 0.01,
+      "timestamp": "2026-06-25T04:13:16.068Z"
+    },
+    {
+      "id": "rev_l02syou6m5o86nmho1yrgj",
+      "event_id": "evt_iep71blsihn24v7oqtvtcp",
+      "amount_usd": 0.01,
+      "timestamp": "2026-06-24T19:15:22.068Z"
+    },
+    {
+      "id": "rev_2umeuli84kquulrqmrjjg",
+      "event_id": "evt_lxg8o5bn21ekj5il040lk",
+      "amount_usd": 0.01,
+      "timestamp": "2026-06-23T21:07:55.068Z"
+    },
+    {
+      "id": "rev_atuisutm6ctwdp06ns5ibs",
+      "event_id": "evt_8500drdk5v8kkb1e3zwvi",
+      "amount_usd": 0.01,
+      "timestamp": "2026-06-22T11:47:22.068Z"
+    },
+    {
+      "id": "pay_qrj7ekh2ps",
+      "event_id": "evt_r3t3jn743qh",
+      "amount_usd": 0.49,
+      "timestamp": "2026-06-26T12:21:32.114Z"
+    }
+  ]
+}

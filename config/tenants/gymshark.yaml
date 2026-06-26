@@ -1,0 +1,26 @@
+id: gymshark
+display_name: Gymshark
+domain: gymshark.com
+logo_url: https://brandlogos.net/wp-content/uploads/2021/11/gymshark-logo.png
+market: UK activewear / D2C
+competitors:
+  - name: Lululemon
+    domains: [lululemon.co.uk, lululemon.com]
+  - name: Nike
+    domains: [nike.com]
+  - name: ASOS
+    domains: [asos.com]
+  - name: Adidas
+    domains: [adidas.co.uk]
+  - name: Under Armour
+    domains: [underarmour.co.uk]
+owned_publish_channel:
+  type: notion
+  database_id: ${NOTION_DATABASE_ID}
+  workspace_url: https://notion.so/gymshark-workspace
+tavily_search_profiles:
+  - brand_mentions
+  - competitor_launches
+  - competitor_pricing
+  - market_trends
+  - comparison_content
