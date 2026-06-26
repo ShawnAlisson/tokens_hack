@@ -64,7 +64,7 @@ export default function CompetitorWatchlist({ onSelectCompetitor, refreshTrigger
         <h3 className="text-sm font-bold text-slate-800">Competitor Watchlist</h3>
       </div>
 
-      <div className="space-y-2 max-h-[200px] overflow-y-auto">
+      <div className="space-y-2 overflow-y-auto">
         {watchlist.map((comp) => (
           <button
             key={comp.name}
