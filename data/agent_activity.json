@@ -2,6 +2,17 @@
   {
     "tenant_id": "gymshark",
     "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_cmnop87a",
+    "timestamp": "2026-06-26T14:05:25.188Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
     "message": "Brand Context Agent syncing live data for Gymshark",
     "status": "running",
     "id": "log_i29teu5s",
