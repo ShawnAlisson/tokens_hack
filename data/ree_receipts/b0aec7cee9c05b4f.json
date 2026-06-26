@@ -1,0 +1,15 @@
+{
+  "content_hash": "b0aec7cee9c05b4f",
+  "title": "Read 191 Genuine Customer Reviews | gymshark.com",
+  "snippet": "REVIEWS.io logo\nREVIEWS.io logo\n\n# Gymshark Reviews\n\n| Shipping & Delivery | |\n --- |\n| Delivery Methods | Courier |\n| Customer Service | |\n| Communication Channels | Email |\n\nWrite Your review\n\nmedia upload photo icon\nmedia upload video icon\nGymshark 1 star review on 27th August 2024\nGymshark 1 star review on 27th August 2024\nGymshark 1 star review on 27th August 2024\nGymshark 1 star review on 5th July 2024\nGymshark 1 star review on 31st October 2023\nGymshark 1 star review on 15th August 2023\nGymshark 1 star review on 15th August 2023\n\nREVIEWS.io",
+  "classification": {
+    "severity": "medium",
+    "category": "logistics_issue",
+    "summary": "Gymshark is facing multiple negative customer reviews highlighting dissatisfaction with shipping and delivery experiences. The recurring 1-star reviews suggest potential logistics or customer service issues affecting customer satisfaction."
+  },
+  "model": "Qwen/Qwen3-8B",
+  "source": "ree_live",
+  "receipt": null,
+  "raw_output": "<think>\nOkay, let's tackle this. The user provided a competitor news event about Gymshark's reviews. The title mentions 191 genuine customer reviews, and the snippet shows several 1-star reviews from different dates. \n\nFirst, I need to determine the severity. The reviews are all negative, which</think>\n\n{\n  \"severity\": \"medium\",\n  \"category\": \"logistics_issue\",\n  \"summary\": \"Gymshark is facing multiple negative customer reviews highlighting dissatisfaction with shipping and delivery experiences. The recurring 1-star reviews suggest potential logistics or customer service issues affecting customer satisfaction.\"\n}<|im_end|>\n===========",
+  "generated_at": "2026-06-26T15:35:19.826Z"
+}

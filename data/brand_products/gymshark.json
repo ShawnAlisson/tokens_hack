@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Vital Seamless Leggings",
+    "price_gbp": 40,
+    "category": "Leggings",
+    "image_url": "https://images.ctfassets.net/wl6q2in9o7k3/6QSVimOwmHFExCEQUpoLkz/6028b5e963f1bf47f95fd74302ecebae/Seasonal-Ecom-PLP_Link_Card_-_26282949.jpeg",
+    "source_url": "https://www.gymshark.com/products/gymshark-vital-seamless-leggings-black-ss22"
+  },
+  {
+    "name": "Adapt Fleck Seamless Sports Bra",
+    "price_gbp": 35,
+    "category": "Sports Bra",
+    "image_url": "https://images.ctfassets.net/wl6q2in9o7k3/3MJfQKRzsFtwqqVITCnzEK/e73d45f18bd73e7d5ed3d5e942f26605/S19_2249.jpg",
+    "source_url": "https://www.gymshark.com/products/gymshark-adapt-fleck-seamless-sports-bra-black-ss22"
+  },
+  {
+    "name": "Crest Joggers",
+    "price_gbp": 45,
+    "category": "Joggers",
+    "image_url": "https://images.ctfassets.net/wl6q2in9o7k3/4Qzcg173y3gYQhWSwjRHm5/c4389edd90f12ec459d99fcb327ac9e2/image-1080x651.jpg",
+    "source_url": "https://www.gymshark.com/products/gymshark-crest-joggers-black-aw21"
+  },
+  {
+    "name": "Arrival 5\" Shorts",
+    "price_gbp": 28,
+    "category": "Shorts",
+    "image_url": "https://images.ctfassets.net/8urtyqugdt2l/3W9y1MMzE57pUwTQpqmVUi/c64862748316dcdd587ae357b843aff1/Gymshark_Stratford_Store_5.png",
+    "source_url": "https://www.gymshark.com/products/gymshark-arrival-5-shorts-black-ss22"
+  }
+]

@@ -100,7 +100,7 @@ export default function BrandOnboarding({ onComplete }: BrandOnboardingProps) {
                 setQuery(e.target.value);
                 setShowResults(true);
               }}
-              placeholder="Search brands… e.g. Gymshark"
+              placeholder="Search brands…"
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
             />
 

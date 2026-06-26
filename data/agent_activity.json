@@ -1,6 +1,158 @@
 [
   {
     "tenant_id": "gymshark",
+    "agent": "x402",
+    "message": "Micropayment captured — $0.49 USD intelligence fee",
+    "status": "success",
+    "meta": {
+      "amount": 0.49
+    },
+    "id": "log_ef8z2ewz",
+    "timestamp": "2026-06-26T15:42:26.806Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Campaign brief published — latency 1957ms",
+    "status": "success",
+    "meta": {
+      "latency_ms": 1957
+    },
+    "id": "log_zbxnccal",
+    "timestamp": "2026-06-26T15:42:26.804Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Compiling campaign brief and publishing to cited.md",
+    "status": "running",
+    "id": "log_pnn9x1ts",
+    "timestamp": "2026-06-26T15:42:24.843Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Strategy derived: \"Community Highlight & Organic Social Push\" — 1 Vadalog rules applied",
+    "status": "success",
+    "meta": {
+      "rules": 1
+    },
+    "id": "log_8fdwrc2l",
+    "timestamp": "2026-06-26T15:42:24.840Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Analysing competitor threat for event evt_8h9wjgkf23hkb16k46ljsp",
+    "status": "running",
+    "id": "log_7zccfhrx",
+    "timestamp": "2026-06-26T15:42:12.504Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Verified threat event evt_8h9wjgkf23hkb16k46ljsp — classification confirmed, routing to Strategist",
+    "status": "success",
+    "id": "log_ccchvbyv",
+    "timestamp": "2026-06-26T15:42:12.502Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_ylszre2j",
+    "timestamp": "2026-06-26T15:40:00.356Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_9rabizhh",
+    "timestamp": "2026-06-26T15:39:49.612Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_ezvucztq",
+    "timestamp": "2026-06-26T15:27:39.809Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_ls976t92",
+    "timestamp": "2026-06-26T15:27:23.867Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_ojcs1vgh",
+    "timestamp": "2026-06-26T15:26:18.948Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_85rxmqw6",
+    "timestamp": "2026-06-26T15:26:05.188Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_f8ja16f4",
+    "timestamp": "2026-06-26T15:25:55.691Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_mbt9gu8m",
+    "timestamp": "2026-06-26T15:25:40.536Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_qxbbtqf2",
+    "timestamp": "2026-06-26T15:25:33.303Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_i6shz1nk",
+    "timestamp": "2026-06-26T15:25:22.463Z"
+  },
+  {
+    "tenant_id": "gymshark",
     "agent": "system",
     "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
     "status": "success",
