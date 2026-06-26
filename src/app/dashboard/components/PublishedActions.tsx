@@ -8,6 +8,7 @@ interface CounterAction {
   competitor: string;
   trigger_title: string;
   strategy_angle: string;
+  content_draft: string;
   published_url: string;
   latency_ms: number;
   published_at: string;
@@ -24,110 +25,79 @@ export default function PublishedActions({ refreshTrigger, selectedActionId, onS
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchActions() {
-      try {
-        const res = await fetch("/api/dashboard/actions");
-        if (res.ok) {
-          const data = await res.json();
-          setActions(data.actions || []);
-        }
-      } catch (err) {
-        console.error("Failed to load counter actions:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchActions();
+    fetch("/api/dashboard/actions")
+      .then((r) => r.ok ? r.json() : { actions: [] })
+      .then((data) => setActions(data.actions || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, [refreshTrigger]);
 
   if (loading) {
     return (
-      <div className="glass-panel p-6 rounded-2xl h-full flex items-center justify-center">
-        <span className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="bc-panel rounded-2xl h-full flex items-center justify-center">
+        <span className="w-7 h-7 border-2 border-teal-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="glass-panel p-6 rounded-2xl h-full flex flex-col justify-between">
-      <div>
-        <h3 className="text-md font-bold tracking-tight text-white flex items-center gap-2">
-          <Send className="w-5 h-5 text-emerald-500" /> Published Counter-Strikes
-        </h3>
-        <p className="text-xs text-slate-400 mt-0.5">Live briefs synchronized to Notion. Click to review brief.</p>
-
-        <div className="mt-4 space-y-3 max-h-[350px] overflow-y-auto pr-1">
-          {actions.length > 0 ? (
-            actions.map((act) => {
-              const isSelected = selectedActionId === act.id;
-              return (
-                <div 
-                  key={act.id} 
-                  onClick={() => onSelectAction && onSelectAction(act)}
-                  className={`glass-panel-glow-emerald p-4 rounded-xl border transition-all duration-300 space-y-2 relative ${
-                    onSelectAction ? "cursor-pointer" : ""
-                  } ${
-                    isSelected 
-                      ? "border-emerald-400 bg-emerald-950/20 shadow-lg shadow-emerald-500/10 scale-[1.01]" 
-                      : "border-emerald-500/15 hover:border-emerald-500/40 hover:bg-emerald-950/5"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[10px] border font-bold px-2 py-0.5 rounded uppercase tracking-wider ${
-                      isSelected 
-                        ? "bg-emerald-500 text-slate-950 border-emerald-400" 
-                        : "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                    }`}>
-                      {isSelected ? "Active View" : "Published"}
-                    </span>
-                    <span className="text-[10px] text-slate-500">
-                      {new Date(act.published_at).toLocaleDateString()}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-300 leading-tight">
-                      Trigger: <span className="text-white font-extrabold">{act.competitor}</span> — {act.trigger_title}
-                    </h4>
-                    <p className="text-sm font-black text-emerald-400 leading-snug mt-1.5 glow-text-emerald">
-                      {act.strategy_angle}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-slate-500">
-                      <span className="text-[10px] flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-slate-500" /> {act.latency_ms}ms
-                      </span>
-                      <span className="text-[10px] flex items-center gap-1">
-                        <BookOpen className="w-3.5 h-3.5 text-slate-500" /> Notion DB sync
-                      </span>
-                    </div>
-
-                    <a 
-                      href={act.published_url} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()} // Prevent card selection when clicking link
-                      className="text-[10px] text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 font-extrabold"
-                    >
-                      <Link className="w-3 h-3" /> View Notion Page
-                    </a>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-center py-12 text-slate-500 text-xs">
-              No actions published yet. Trigger a strike to publish.
-            </div>
-          )}
-        </div>
+    <div className="bc-panel rounded-2xl h-full flex flex-col p-5">
+      <div className="flex items-center gap-2 mb-1">
+        <Send className="w-5 h-5 text-emerald-600" />
+        <h3 className="text-sm font-bold text-slate-800">Published Campaigns</h3>
       </div>
+      <p className="text-[10px] text-slate-400 mb-3">Click to review a past counter-strike</p>
 
-      <div className="mt-4 pt-4 border-t border-white/5 flex items-center gap-1.5">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 pulse-glow-emerald" />
-        <p className="text-[10px] text-slate-500 font-medium">All publishes validated with zero-impersonation safety</p>
+      <div className="flex-1 space-y-2 overflow-y-auto pr-1">
+        {actions.length > 0 ? (
+          actions.map((act) => {
+            const isSelected = selectedActionId === act.id;
+            return (
+              <div
+                key={act.id}
+                onClick={() => onSelectAction?.(act)}
+                className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
+                  isSelected
+                    ? "border-emerald-400 bg-emerald-50 shadow-md"
+                    : "border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/30"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded uppercase ${
+                    isSelected ? "bg-emerald-600 text-white" : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                  }`}>
+                    {isSelected ? "Viewing" : "Published"}
+                  </span>
+                  <span className="text-[9px] text-slate-400">
+                    {new Date(act.published_at).toLocaleDateString()}
+                  </span>
+                </div>
+                <h4 className="text-xs font-bold text-slate-700 leading-tight">
+                  {act.competitor} — {act.trigger_title}
+                </h4>
+                <p className="text-xs font-semibold text-emerald-700 mt-1">{act.strategy_angle}</p>
+                <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+                  <span className="text-[9px] text-slate-400 flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {act.latency_ms}ms
+                  </span>
+                  <a
+                    href={act.published_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-[9px] text-teal-600 font-bold flex items-center gap-1"
+                  >
+                    <Link className="w-3 h-3" /> Notion
+                  </a>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="text-center py-10 text-slate-400 text-xs">
+            No campaigns yet. Run a strike on a threat to publish.
+          </div>
+        )}
       </div>
     </div>
   );

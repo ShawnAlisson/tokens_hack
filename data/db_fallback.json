@@ -196,6 +196,45 @@
       "notion_page_id": "notion_page_yqrswna2",
       "latency_ms": 0,
       "published_at": "2026-06-26T12:21:32.110Z"
+    },
+    {
+      "id": "act_bhncar3v2y65g3u5saoa4",
+      "event_id": "evt_r3t3jn743qh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale",
+      "strategy_angle": "Affiliate Community Free Delivery & Accessories Hook",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Complete the Gym bag\"\n\n#### Trigger:\nLululemon launches a flash sale campaign: \"Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale\".\n\n#### Strategic Brand Stance:\nHijack checkout attention by offering immediate complimentary value on smaller accessories (free crew socks & shaker) combined with free next-day delivery on all purchases above £35.\n\n#### Counter-Content Copy Draft:\n\"Spotted Lululemon's sale? Upgrade your gym bag with the final touches. Get a FREE Gymshark shaker and crew socks with every order. No code needed. Added automatically at checkout. Speed through your reps.\"\n\n#### Distribution Channel:\nPush Notifications via Gymshark iOS App and Google Ad banners.",
+      "published_url": "https://notion.so/gymshark-workspace/affiliate-community-free-delivery-accessories-hook-t6l8woie",
+      "notion_page_id": "notion_page_t6l8woie",
+      "latency_ms": 0,
+      "published_at": "2026-06-26T13:18:09.167Z"
+    },
+    {
+      "id": "act_qe6w68o707pku0wxmbpdaq",
+      "event_id": "evt_r3t3jn743qh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale",
+      "strategy_angle": "Affiliate Community Free Delivery & Accessories Hook",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Complete the Gym bag\"\n\n#### Trigger:\nLululemon launches a flash sale campaign: \"Lululemon slashes UK Align pants pricing by 22% in mid-season flash sale\".\n\n#### Strategic Brand Stance:\nHijack checkout attention by offering immediate complimentary value on smaller accessories (free crew socks & shaker) combined with free next-day delivery on all purchases above £35.\n\n#### Counter-Content Copy Draft:\n\"Spotted Lululemon's sale? Upgrade your gym bag with the final touches. Get a FREE Gymshark shaker and crew socks with every order. No code needed. Added automatically at checkout. Speed through your reps.\"\n\n#### Distribution Channel:\nPush Notifications via Gymshark iOS App and Google Ad banners.",
+      "published_url": "https://notion.so/gymshark-workspace/affiliate-community-free-delivery-accessories-hook-6m1qq2f4",
+      "notion_page_id": "notion_page_6m1qq2f4",
+      "latency_ms": 0,
+      "published_at": "2026-06-26T13:20:59.047Z"
+    },
+    {
+      "id": "act_x2pln3w1njg94pj4k3zfb",
+      "event_id": "evt_az8h7mk70udwvxbk5dw7eh",
+      "tenant_id": "gymshark",
+      "competitor": "Lululemon",
+      "trigger_title": "Lululemon slashes Align leggings pricing by 15% across UK e-commerce",
+      "strategy_angle": "Value-Driven Multi-Pack Bundle Campaign",
+      "content_draft": "### Tactical Counter-Strike Campaign: \"Double the Fit, Double the Sweat\"\n\n#### Trigger:\nLululemon is adjusting pricing in the UK market: \"Lululemon slashes Align leggings pricing by 15% across UK e-commerce\".\n\n#### Strategic Brand Stance:\nRather than lowering individual margins in a direct race to the bottom, we leverage our Core USP: high-quality multi-buy bundles. This allows us to protect our premium reputation while delivering superior value compared to Lululemon.\n\n#### Counter-Content Copy Draft:\n\"Premium shouldn't mean overpriced. Why buy one pair of leggings when you can get two that last twice as long? Get 2 Gymshark Everyday Seamless Leggings for £60 today. Built for sweat. Styled for life. No compromises.\"\n\n#### Distribution Channel:\nMeta and TikTok video advertisements targeting UK activewear shoppers.",
+      "published_url": "https://notion.so/gymshark-workspace/value-driven-multi-pack-bundle-campaign-qobd00d6",
+      "notion_page_id": "notion_page_qobd00d6",
+      "latency_ms": 0,
+      "published_at": "2026-06-26T13:21:31.542Z"
     }
   ],
   "revenue_events": [
@@ -234,6 +273,24 @@
       "event_id": "evt_r3t3jn743qh",
       "amount_usd": 0.49,
       "timestamp": "2026-06-26T12:21:32.114Z"
+    },
+    {
+      "id": "pay_mb3j5i287oh",
+      "event_id": "evt_r3t3jn743qh",
+      "amount_usd": 0.49,
+      "timestamp": "2026-06-26T13:18:09.168Z"
+    },
+    {
+      "id": "pay_yf5cu161kr",
+      "event_id": "evt_r3t3jn743qh",
+      "amount_usd": 0.49,
+      "timestamp": "2026-06-26T13:20:59.049Z"
+    },
+    {
+      "id": "pay_8t95hqlt9i7",
+      "event_id": "evt_az8h7mk70udwvxbk5dw7eh",
+      "amount_usd": 0.49,
+      "timestamp": "2026-06-26T13:21:31.543Z"
     }
   ]
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { 
-  BellRing, DollarSign, Rocket, Users, LineChart, Scale, 
-  HelpCircle, ShieldAlert, Link, Loader2 
+import {
+  BellRing, DollarSign, Rocket, Users, LineChart, Scale,
+  HelpCircle, Link, Loader2, Zap,
 } from "lucide-react";
 
 interface CompetitorEvent {
@@ -17,13 +17,20 @@ interface CompetitorEvent {
   inserted_at: string;
 }
 
-export default function EventFeed({ refreshTrigger, onTriggerAnalysis }: { refreshTrigger: number, onTriggerAnalysis: (id: string) => void }) {
+export default function EventFeed({
+  refreshTrigger,
+  onTriggerAnalysis,
+  pipelineBusy = false,
+}: {
+  refreshTrigger: number;
+  onTriggerAnalysis: (id: string) => void;
+  pipelineBusy?: boolean;
+}) {
   const [events, setEvents] = useState<CompetitorEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [streamActive, setStreamActive] = useState(false);
   const sseRef = useRef<EventSource | null>(null);
 
-  // Load initial static events list
   async function fetchEvents() {
     try {
       const res = await fetch("/api/dashboard/events?limit=25");
@@ -41,178 +48,128 @@ export default function EventFeed({ refreshTrigger, onTriggerAnalysis }: { refre
   useEffect(() => {
     fetchEvents();
 
-    // Setup SSE connection
-    try {
-      console.log("[SSE] Initializing live event stream...");
-      const sse = new EventSource("/api/dashboard/events/stream");
-      sseRef.current = sse;
+    const sse = new EventSource("/api/dashboard/events/stream");
+    sseRef.current = sse;
 
-      sse.onopen = () => {
-        console.log("[SSE] Connection established.");
-        setStreamActive(true);
-      };
+    sse.onopen = () => setStreamActive(true);
 
-      sse.addEventListener("event", (e: any) => {
-        try {
-          const newEvent = JSON.parse(e.data) as CompetitorEvent;
-          console.log("[SSE] Received new real-time event:", newEvent);
-          setEvents((prev) => {
-            // Prevent duplicates
-            if (prev.some((item) => item.id === newEvent.id)) return prev;
-            return [newEvent, ...prev].slice(0, 50); // limit to 50
-          });
-        } catch (err) {
-          console.error("[SSE] Failed to parse event stream data:", err);
-        }
-      });
-
-      sse.onerror = (err) => {
-        console.warn("[SSE] Connection lost, falling back to static polling.", err);
-        setStreamActive(false);
-        sse.close();
-      };
-    } catch (err) {
-      console.error("[SSE] Init failed:", err);
-    }
-
-    return () => {
-      if (sseRef.current) {
-        sseRef.current.close();
+    sse.addEventListener("event", (e: MessageEvent) => {
+      try {
+        const newEvent = JSON.parse(e.data) as CompetitorEvent;
+        setEvents((prev) => {
+          if (prev.some((item) => item.id === newEvent.id)) return prev;
+          return [newEvent, ...prev].slice(0, 50);
+        });
+      } catch {
+        // ignore
       }
+    });
+
+    sse.onerror = () => {
+      setStreamActive(false);
+      sse.close();
     };
+
+    return () => sse.close();
   }, [refreshTrigger]);
 
-  // Fallback Polling if SSE goes offline
   useEffect(() => {
     if (streamActive) return;
-
-    const interval = setInterval(() => {
-      console.log("[Feed] Polling for new events (SSE offline)...");
-      fetchEvents();
-    }, 5000);
-
+    const interval = setInterval(fetchEvents, 5000);
     return () => clearInterval(interval);
   }, [streamActive]);
 
   const getSourceIcon = (type: string) => {
+    const cls = "w-4 h-4";
     switch (type) {
-      case "pricing": return <DollarSign className="w-4 h-4 text-emerald-400" />;
-      case "launch": return <Rocket className="w-4 h-4 text-purple-400" />;
-      case "mention": return <Users className="w-4 h-4 text-cyan-400" />;
-      case "trend": return <LineChart className="w-4 h-4 text-amber-400" />;
-      case "comparison": return <Scale className="w-4 h-4 text-indigo-400" />;
-      default: return <HelpCircle className="w-4 h-4 text-slate-400" />;
+      case "pricing": return <DollarSign className={`${cls} text-emerald-600`} />;
+      case "launch": return <Rocket className={`${cls} text-violet-600`} />;
+      case "mention": return <Users className={`${cls} text-teal-600`} />;
+      case "trend": return <LineChart className={`${cls} text-amber-600`} />;
+      case "comparison": return <Scale className={`${cls} text-indigo-600`} />;
+      default: return <HelpCircle className={`${cls} text-slate-400`} />;
     }
   };
 
   if (loading) {
     return (
-      <div className="glass-panel p-6 rounded-2xl h-full flex flex-col justify-center items-center">
-        <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
-        <p className="text-xs text-slate-400 mt-2">Connecting to Sentinel SSE feed...</p>
+      <div className="bc-panel rounded-2xl h-full flex flex-col justify-center items-center">
+        <Loader2 className="w-7 h-7 text-teal-600 animate-spin" />
+        <p className="text-xs text-slate-400 mt-2">Connecting to intelligence stream...</p>
       </div>
     );
   }
 
   return (
-    <div className="glass-panel p-6 rounded-2xl h-full flex flex-col justify-between">
-      <div>
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BellRing className="w-5 h-5 text-cyan-500" />
-            <h3 className="text-md font-bold text-white tracking-tight">Intelligence Stream</h3>
-          </div>
-
-          <div className="flex items-center gap-1.5 bg-slate-950/40 border border-white/5 px-2.5 py-1 rounded-full">
-            <span className={`w-2 h-2 rounded-full ${streamActive ? "bg-emerald-500 pulse-glow-emerald" : "bg-amber-500 animate-pulse"}`} />
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-              {streamActive ? "SSE Live" : "Polling Active"}
-            </span>
-          </div>
+    <div className="bc-panel rounded-2xl h-full flex flex-col p-5">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <BellRing className="w-5 h-5 text-teal-600" />
+          <h3 className="text-sm font-bold text-slate-800">Intelligence Stream</h3>
         </div>
-
-        {/* List */}
-        <div className="mt-4 space-y-3.5 max-h-[350px] overflow-y-auto pr-1">
-          {events.length > 0 ? (
-            events.map((evt) => (
-              <div 
-                key={evt.id} 
-                className="glass-panel p-4 rounded-xl border border-white/5 hover:border-white/10 transition-all space-y-2 relative overflow-hidden group"
-              >
-                {/* Lateral colored border representing severity */}
-                <div className={`absolute top-0 left-0 bottom-0 w-1 ${
-                  evt.severity === "high" ? "bg-rose-500" :
-                  evt.severity === "medium" ? "bg-amber-500" : "bg-cyan-500"
-                }`} />
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <span className="p-1 bg-slate-900 border border-white/5 rounded-lg">
-                      {getSourceIcon(evt.source_type)}
-                    </span>
-                    <span className="text-xs font-bold text-amber-400">{evt.competitor}</span>
-                  </div>
-
-                  <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${
-                    evt.severity === "high" ? "bg-rose-500/10 border border-rose-500/30 text-rose-400" :
-                    evt.severity === "medium" ? "bg-amber-500/10 border border-amber-500/30 text-amber-400" :
-                    "bg-cyan-500/10 border border-cyan-500/30 text-cyan-400"
-                  }`}>
-                    {evt.severity} threat
-                  </span>
-                </div>
-
-                <div>
-                  <h4 className="text-xs font-extrabold text-white leading-snug antialiased line-clamp-1">
-                    {evt.title}
-                  </h4>
-                  <p className="text-[11px] text-slate-400 leading-normal mt-1 line-clamp-2">
-                    {evt.snippet}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-[9px] text-slate-500">
-                    {new Date(evt.inserted_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-
-                  <div className="flex items-center gap-2">
-                    <a 
-                      href={evt.url} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="p-1 hover:bg-slate-900 text-slate-500 hover:text-slate-300 rounded border border-transparent hover:border-white/5 transition-all"
-                    >
-                      <Link className="w-3 h-3" />
-                    </a>
-                    
-                    <button
-                      onClick={() => onTriggerAnalysis(evt.id)}
-                      className="text-[9px] bg-cyan-950/40 border border-cyan-500/30 hover:border-cyan-500/60 text-cyan-400 hover:text-cyan-300 font-bold px-2 py-0.5 rounded-md transition-all uppercase tracking-wider"
-                    >
-                      Trigger Strike
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-center py-12 text-slate-500 text-xs">
-              Waiting for incoming Open-Web competitor moves...
-            </div>
-          )}
+        <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-1 rounded-full">
+          <span className={`w-1.5 h-1.5 rounded-full ${streamActive ? "bg-emerald-500 bc-pulse" : "bg-amber-500"}`} />
+          <span className="text-[9px] font-bold text-slate-400 uppercase">{streamActive ? "Live" : "Polling"}</span>
         </div>
       </div>
 
-      <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-        <span className="text-[10px] text-slate-500 font-medium">Automatic deduplication layer active</span>
-        <button 
-          onClick={fetchEvents}
-          className="text-[9px] text-slate-400 hover:text-white transition-colors"
-        >
-          Force Reload
-        </button>
+      <p className="text-[10px] text-slate-400 mb-3">Incoming competitor threats classified by Sentinel</p>
+
+      <div className="flex-1 space-y-2.5 overflow-y-auto pr-1">
+        {events.length > 0 ? (
+          events.map((evt) => (
+            <div
+              key={evt.id}
+              className="relative bg-white border border-slate-200 rounded-xl p-3.5 hover:border-slate-300 hover:shadow-sm transition-all space-y-2"
+            >
+              <div className={`absolute top-0 left-0 bottom-0 w-1 rounded-l-xl ${
+                evt.severity === "high" ? "bg-rose-500" :
+                evt.severity === "medium" ? "bg-amber-500" : "bg-teal-500"
+              }`} />
+
+              <div className="flex items-center justify-between pl-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="p-1 bg-slate-50 border border-slate-100 rounded-lg">
+                    {getSourceIcon(evt.source_type)}
+                  </span>
+                  <span className="text-xs font-bold text-slate-700">{evt.competitor}</span>
+                </div>
+                <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${
+                  evt.severity === "high" ? "bg-rose-50 text-rose-600 border border-rose-200" :
+                  evt.severity === "medium" ? "bg-amber-50 text-amber-600 border border-amber-200" :
+                  "bg-teal-50 text-teal-600 border border-teal-200"
+                }`}>
+                  {evt.severity}
+                </span>
+              </div>
+
+              <div className="pl-2">
+                <h4 className="text-xs font-bold text-slate-800 leading-snug line-clamp-1">{evt.title}</h4>
+                <p className="text-[11px] text-slate-500 leading-normal mt-0.5 line-clamp-2">{evt.snippet}</p>
+              </div>
+
+              <div className="pl-2 pt-1.5 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-[9px] text-slate-400">
+                  {new Date(evt.inserted_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                </span>
+                <div className="flex items-center gap-2">
+                  <a href={evt.url} target="_blank" rel="noreferrer" className="p-1 text-slate-400 hover:text-slate-600">
+                    <Link className="w-3 h-3" />
+                  </a>
+                  <button
+                    onClick={() => onTriggerAnalysis(evt.id)}
+                    disabled={pipelineBusy}
+                    className="text-[9px] bg-orange-500 hover:bg-orange-600 disabled:bg-slate-300 text-white font-bold px-2.5 py-1 rounded-lg transition-colors uppercase tracking-wider flex items-center gap-1"
+                  >
+                    <Zap className="w-3 h-3" /> Run Strike
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-10 text-slate-400 text-xs">Waiting for competitor signals...</div>
+        )}
       </div>
     </div>
   );

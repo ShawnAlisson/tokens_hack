@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import { clickhouse } from "@/lib/integrations/clickhouse";
 import { executeStrategistAnalysis } from "@/lib/agents/strategist";
 import { executeActorPublish } from "@/lib/agents/actor";
+import { logAgentActivity } from "@/lib/agent-activity";
+import { resolveTenantId } from "@/lib/tenant";
 
 const uuid = () => Math.random().toString(36).substring(2, 15);
 
 export async function POST(request: Request) {
+  const tenantId = resolveTenantId(request);
+
   try {
     const { eventId } = await request.json();
 
@@ -16,17 +20,47 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(`[Trigger Strike API] Starting autonomous counter-strike for event: "${eventId}"`);
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "sentinel",
+      message: `Verified threat event ${eventId} — classification confirmed, routing to Strategist`,
+      status: "success",
+    });
 
-    // 1. Run Strategist Agent
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "strategist",
+      message: `Analysing competitor threat for event ${eventId}`,
+      status: "running",
+    });
+
     const counterPlan = await executeStrategistAnalysis(eventId);
-    console.log(`[Trigger Strike API] Created counter plan for strategy: "${counterPlan.strategy_angle}"`);
 
-    // 2. Run Actor Agent
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "strategist",
+      message: `Strategy derived: "${counterPlan.strategy_angle}" — ${counterPlan.rules_applied.length} Vadalog rules applied`,
+      status: "success",
+      meta: { rules: counterPlan.rules_applied.length },
+    });
+
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "actor",
+      message: "Compiling campaign brief and publishing to Notion workspace",
+      status: "running",
+    });
+
     const publishSummary = await executeActorPublish(counterPlan);
-    console.log(`[Trigger Strike API] Brief published successfully to Notion. URL: ${publishSummary.published_url}`);
 
-    // 3. Record Micropayment fee
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "actor",
+      message: `Campaign brief published — latency ${publishSummary.latency_ms}ms`,
+      status: "success",
+      meta: { latency_ms: publishSummary.latency_ms },
+    });
+
     const paymentId = `pay_${uuid()}`;
     await clickhouse.insertRevenueEvent({
       id: paymentId,
@@ -34,7 +68,14 @@ export async function POST(request: Request) {
       amount_usd: 0.49,
       timestamp: new Date().toISOString(),
     });
-    console.log(`[Trigger Strike API] Logged $0.49 micropayment revenue.`);
+
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "x402",
+      message: "Micropayment captured — $0.49 USD intelligence fee",
+      status: "success",
+      meta: { amount: 0.49 },
+    });
 
     return NextResponse.json({
       success: true,
@@ -42,10 +83,16 @@ export async function POST(request: Request) {
       publish: publishSummary,
       payment: { id: paymentId, amount: 0.49 },
     });
-  } catch (error: any) {
-    console.error("[Trigger Strike API] Error running strike pipeline:", error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    await logAgentActivity({
+      tenant_id: tenantId,
+      agent: "system",
+      message: `Strike pipeline failed: ${message}`,
+      status: "error",
+    });
     return NextResponse.json(
-      { error: "Failed to execute strike pipeline", details: error.message },
+      { error: "Failed to execute strike pipeline", details: message },
       { status: 500 }
     );
   }

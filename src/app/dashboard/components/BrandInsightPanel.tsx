@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldCheck, Info, Sparkles } from "lucide-react";
+import { ShieldCheck, Sparkles } from "lucide-react";
 
 interface BrandInsights {
   display_name: string;
@@ -18,99 +18,72 @@ export default function BrandInsightPanel({ refreshTrigger }: { refreshTrigger: 
   const [insights, setInsights] = useState<BrandInsights | null>(null);
 
   useEffect(() => {
-    async function fetchInsights() {
-      try {
-        const res = await fetch("/api/dashboard/brand-insights");
-        if (res.ok) {
-          const data = await res.json();
-          setInsights(data);
-        }
-      } catch (err) {
-        console.error("Failed to fetch brand insights:", err);
-      }
-    }
-    fetchInsights();
+    fetch("/api/dashboard/brand-insights")
+      .then((r) => r.ok ? r.json() : null)
+      .then(setInsights)
+      .catch(console.error);
   }, [refreshTrigger]);
 
   if (!insights) {
     return (
-      <div className="glass-panel p-6 rounded-2xl h-full flex items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <span className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
-          <p className="text-sm text-slate-400">Syncing Brand Brain...</p>
-        </div>
+      <div className="bc-muted rounded-xl p-6 flex items-center justify-center">
+        <span className="w-6 h-6 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" />
       </div>
     );
   }
 
+  const threatBarColor =
+    insights.threat_level === "Critical" ? "bg-rose-500" :
+    insights.threat_level === "Elevated" ? "bg-amber-500" : "bg-emerald-500";
+
   return (
-    <div className="glass-panel p-6 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden">
-      {/* Decorative ambient background gradient */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl" />
-
-      <div>
-        {/* Brand Header */}
-        <div className="flex items-center gap-3">
-          {insights.logo_url ? (
-            <img 
-              src={insights.logo_url} 
-              alt={insights.display_name} 
-              className="w-10 h-10 object-contain rounded-lg bg-white/5 p-1 border border-white/10" 
-              onError={(e) => {
-                // Remove broken images and fallback to icon
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-          ) : null}
-          <div>
-            <h2 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
-              {insights.display_name} <span className="text-[10px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-bold px-1.5 py-0.5 rounded-full tracking-wider uppercase">Active Tenant</span>
-            </h2>
-            <p className="text-xs text-slate-400 mt-0.5">{insights.domain} • {insights.market}</p>
-          </div>
-        </div>
-
-        <hr className="border-white/5 my-4" />
-
-        {/* Brand Positioning Summary (Senso Fact) */}
+    <div className="bc-muted rounded-xl p-4 space-y-4">
+      <div className="flex items-center gap-3">
+        {insights.logo_url && (
+          <img
+            src={insights.logo_url}
+            alt={insights.display_name}
+            className="w-10 h-10 object-contain rounded-lg bg-white border border-slate-200 p-1"
+          />
+        )}
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" /> Grounded Brand Positioning Guidance
-          </h4>
-          <p className="text-sm leading-relaxed text-slate-300 antialiased bg-slate-950/20 border border-white/5 p-3 rounded-xl">
-            {insights.positioning_summary}
-          </p>
+          <h3 className="font-bold text-slate-800 flex items-center gap-2">
+            {insights.display_name}
+            <span className="text-[9px] bg-teal-50 text-teal-700 border border-teal-200 font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+              Active
+            </span>
+          </h3>
+          <p className="text-xs text-slate-400">{insights.domain} · {insights.market}</p>
         </div>
       </div>
 
-      <div className="mt-4 pt-4 border-t border-white/5">
-        {/* Calculated Threat Level Gauge */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Calculated Market Threat Level</h4>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className={`text-xl font-black tracking-tight ${insights.threat_color}`}>
-                {insights.threat_level}
-              </span>
-              <span className="text-xs text-slate-500 font-medium">({insights.threat_score}% Threat Index)</span>
-            </div>
-          </div>
+      <div>
+        <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1 mb-2">
+          <Sparkles className="w-3 h-3 text-violet-500" /> Brand Positioning
+        </h4>
+        <p className="text-sm leading-relaxed text-slate-600 bg-white border border-slate-200 p-3 rounded-xl">
+          {insights.positioning_summary}
+        </p>
+      </div>
 
-          <div className="flex flex-col items-end">
-            {/* Thread Index Progress Bar */}
-            <div className="w-32 bg-slate-800 h-2 rounded-full overflow-hidden border border-white/5">
-              <div 
-                className={`h-full rounded-full transition-all duration-1000 ${
-                  insights.threat_level === "Critical" ? "bg-rose-500" :
-                  insights.threat_level === "Elevated" ? "bg-amber-500" : "bg-emerald-500"
-                }`}
-                style={{ width: `${insights.threat_score}%` }}
-              />
-            </div>
-            <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3 text-slate-400" /> Unified threat monitor active
-            </p>
+      <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+        <div>
+          <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Threat Level</h4>
+          <span className={`text-lg font-bold ${
+            insights.threat_level === "Critical" ? "text-rose-600" :
+            insights.threat_level === "Elevated" ? "text-amber-600" : "text-emerald-600"
+          }`}>
+            {insights.threat_level}
+          </span>
+          <span className="text-xs text-slate-400 ml-1">({insights.threat_score}%)</span>
+        </div>
+        <div className="w-28">
+          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div className={`h-full rounded-full transition-all duration-1000 ${threatBarColor}`} style={{ width: `${insights.threat_score}%` }} />
           </div>
+          <p className="text-[9px] text-slate-400 mt-1 flex items-center gap-1 justify-end">
+            <ShieldCheck className="w-3 h-3" /> Monitoring
+          </p>
         </div>
       </div>
     </div>

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Antigravity — Autonomous Competitive Intelligence Platform",
-  description: "Autonomous real-time competitor intelligence detection, strategic reasoning, and instant Notion publishing engine.",
+  title: "BrandCompete — Autonomous Competitive Intelligence",
+  description: "Monitor competitors, reason over brand positioning, and publish counter-campaigns autonomously.",
 };
 
 export default function RootLayout({

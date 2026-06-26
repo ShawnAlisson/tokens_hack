@@ -30,11 +30,11 @@ export async function executeStrategistAnalysis(eventId: string): Promise<Counte
   console.log(`[Strategist Agent] Initiating tactical strategy analysis for Event: "${eventId}"`);
 
   // Node 1: Fetch Ingested Event from ClickHouse
-  const tenantId = process.env.ACTIVE_TENANT || "gymshark";
-  const event = await clickhouse.getCompetitorEventById(tenantId, eventId);
+  const event = await clickhouse.getCompetitorEventById("", eventId);
   if (!event) {
     throw new Error(`Event not found in ClickHouse store for ID: ${eventId}`);
   }
+  const tenantId = event.tenant_id;
 
   console.log(`[Strategist Agent] [Node 1] Loaded trigger event: "${event.title}"`);
 

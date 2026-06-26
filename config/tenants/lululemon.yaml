@@ -1,0 +1,42 @@
+id: lululemon
+display_name: Lululemon
+domain: lululemon.co.uk
+logo_url: https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lululemon_Athletica_logo.svg/320px-Lululemon_Athletica_logo.svg.png
+market: UK premium activewear / wellness
+competitors:
+  - name: Gymshark
+    domains: [gymshark.com]
+  - name: Nike
+    domains: [nike.com]
+  - name: Alo Yoga
+    domains: [aloyoga.com]
+  - name: Adidas
+    domains: [adidas.co.uk]
+owned_publish_channel:
+  type: notion
+  database_id: ${NOTION_DATABASE_ID}
+  workspace_url: https://notion.so/lululemon-workspace
+tavily_search_profiles:
+  - brand_mentions
+  - competitor_launches
+  - competitor_pricing
+  - market_trends
+  - comparison_content
+
+products:
+  - name: Align High-Rise Pant 25"
+    price_gbp: 78
+    category: Leggings
+    image_url: https://images.lululemon.com/is/image/lululemon/LW5BP4S_0001_1
+  - name: Energy Bra High Support
+    price_gbp: 54
+    category: Sports Bra
+    image_url: https://images.lululemon.com/is/image/lululemon/LW2CJ0S_0001_1
+  - name: Scuba Oversized Hoodie
+    price_gbp: 98
+    category: Hoodie
+    image_url: https://images.lululemon.com/is/image/lululemon/LW3HT8S_0001_1
+  - name: Fast and Free Short 6"
+    price_gbp: 58
+    category: Shorts
+    image_url: https://images.lululemon.com/is/image/lululemon/LW7BJFS_0001_1

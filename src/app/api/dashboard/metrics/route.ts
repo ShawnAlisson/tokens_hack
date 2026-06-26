@@ -4,9 +4,9 @@ import { getActiveTenantConfig } from "@/lib/tenant";
 import fs from "fs";
 import path from "path";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
     const tenantId = tenant.id;
 
     // Load events and actions from clickhouse

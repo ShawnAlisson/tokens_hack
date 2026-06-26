@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get("limit") || "25", 10);
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
 
     const events = await clickhouse.getCompetitorEvents(tenant.id, limit);
 

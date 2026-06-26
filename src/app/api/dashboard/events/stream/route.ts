@@ -4,8 +4,8 @@ import { getActiveTenantConfig } from "@/lib/tenant";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-  const tenant = getActiveTenantConfig();
+export async function GET(request: Request) {
+  const tenant = getActiveTenantConfig(request);
   const tenantId = tenant.id;
 
   // Track event IDs that are already seen/sent

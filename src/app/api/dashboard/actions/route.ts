@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { clickhouse } from "@/lib/integrations/clickhouse";
 import { getActiveTenantConfig } from "@/lib/tenant";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
     const actions = await clickhouse.getCounterActions(tenant.id, 50);
 
     return NextResponse.json({ actions });

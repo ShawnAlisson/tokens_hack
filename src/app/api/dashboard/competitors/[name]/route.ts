@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { name } = await params;
     const decodedName = decodeURIComponent(name);
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
 
     const stats = await clickhouse.getCompetitorStats(tenant.id, decodedName);
 

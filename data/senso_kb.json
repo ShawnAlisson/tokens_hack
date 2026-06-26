@@ -33,5 +33,40 @@
     "category": "positioning",
     "topic": "The Working Athlete",
     "content": "Gymshark is positioned as the gear of the everyday dedicated gymgoer - the working athlete. Unlike luxury activewear brands (e.g. Lululemon) focusing on wellness/yoga, Gymshark focuses on weightlifting, heavy workouts, and performance community."
+  },
+  {
+    "id": "fact_lululemon_0",
+    "tenant_id": "lululemon",
+    "category": "usp",
+    "topic": "Premium Technical Fabric",
+    "content": "Lululemon's proprietary Nulu and Luxtreme fabrics deliver buttery-soft feel with four-way stretch, setting the benchmark for premium yoga and training wear in the UK market."
+  },
+  {
+    "id": "fact_lululemon_1",
+    "tenant_id": "lululemon",
+    "category": "usp",
+    "topic": "Community & Membership",
+    "content": "Lululemon's membership programme offers free hemming, early access to drops, and studio partnerships — creating deep loyalty that budget competitors cannot replicate."
+  },
+  {
+    "id": "fact_lululemon_2",
+    "tenant_id": "lululemon",
+    "category": "product_line",
+    "topic": "Align & Scuba Collections",
+    "content": "The Align legging line and Scuba hoodie franchise are Lululemon's highest-recognition products, driving premium pricing power and social media visibility."
+  },
+  {
+    "id": "fact_lululemon_3",
+    "tenant_id": "lululemon",
+    "category": "brand_voice",
+    "topic": "Mindful, Aspirational, Inclusive",
+    "content": "Lululemon speaks with calm confidence — wellness-forward, inclusive, and aspirational without being elitist. Copy emphasises movement, mindfulness, and personal best."
+  },
+  {
+    "id": "fact_lululemon_4",
+    "tenant_id": "lululemon",
+    "category": "positioning",
+    "topic": "Premium Wellness Lifestyle",
+    "content": "Lululemon is positioned as the premium wellness lifestyle brand for the mindful athlete. Unlike mass-market gym brands, Lululemon owns the intersection of yoga, running, and everyday luxury comfort."
   }
 ]

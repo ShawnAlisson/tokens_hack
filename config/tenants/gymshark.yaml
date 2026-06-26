@@ -24,3 +24,21 @@ tavily_search_profiles:
   - competitor_pricing
   - market_trends
   - comparison_content
+
+products:
+  - name: Vital Seamless Leggings
+    price_gbp: 40
+    category: Leggings
+    image_url: https://cdn.shopify.com/s/files/1/0533/2088/files/Gymshark_Vital_Seamless_Leggings_2.0_Black_SS23_Thumbnail_1200x1200.jpg?v=1682502000
+  - name: Adapt Animal Seamless Sports Bra
+    price_gbp: 35
+    category: Sports Bra
+    image_url: https://cdn.shopify.com/s/files/1/0533/2088/files/Gymshark_Adapt_Animal_Seamless_Sports_Bra_Black_SS23_Thumbnail_1200x1200.jpg?v=1682502000
+  - name: Crest Joggers
+    price_gbp: 45
+    category: Joggers
+    image_url: https://cdn.shopify.com/s/files/1/0533/2088/files/Gymshark_Crest_Joggers_Black_SS23_Thumbnail_1200x1200.jpg?v=1682502000
+  - name: Arrival 5" Shorts
+    price_gbp: 20
+    category: Shorts
+    image_url: https://cdn.shopify.com/s/files/1/0533/2088/files/Gymshark_Arrival_5_Shorts_Black_SS23_Thumbnail_1200x1200.jpg?v=1682502000

@@ -1,0 +1,173 @@
+[
+  {
+    "tenant_id": "gymshark",
+    "agent": "x402",
+    "message": "Micropayment captured — $0.49 USD intelligence fee",
+    "status": "success",
+    "meta": {
+      "amount": 0.49
+    },
+    "id": "log_nlnjz5p5",
+    "timestamp": "2026-06-26T13:21:31.543Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Campaign brief published — latency 0ms",
+    "status": "success",
+    "meta": {
+      "latency_ms": 0
+    },
+    "id": "log_ja5uho0w",
+    "timestamp": "2026-06-26T13:21:31.543Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Compiling campaign brief and publishing to Notion workspace",
+    "status": "running",
+    "id": "log_xb3p6tw5",
+    "timestamp": "2026-06-26T13:21:31.542Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Strategy derived: \"Value-Driven Multi-Pack Bundle Campaign\" — 1 Vadalog rules applied",
+    "status": "success",
+    "meta": {
+      "rules": 1
+    },
+    "id": "log_7sglkpn6",
+    "timestamp": "2026-06-26T13:21:31.541Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Analysing competitor threat for event evt_az8h7mk70udwvxbk5dw7eh",
+    "status": "running",
+    "id": "log_z32x9ct9",
+    "timestamp": "2026-06-26T13:21:31.541Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Verified threat event evt_az8h7mk70udwvxbk5dw7eh — classification confirmed, routing to Strategist",
+    "status": "success",
+    "id": "log_ufc26917",
+    "timestamp": "2026-06-26T13:21:31.540Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "x402",
+    "message": "Micropayment captured — $0.49 USD intelligence fee",
+    "status": "success",
+    "meta": {
+      "amount": 0.49
+    },
+    "id": "log_73m5g62t",
+    "timestamp": "2026-06-26T13:20:59.049Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Campaign brief published — latency 0ms",
+    "status": "success",
+    "meta": {
+      "latency_ms": 0
+    },
+    "id": "log_sxoo1cu1",
+    "timestamp": "2026-06-26T13:20:59.049Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Compiling campaign brief and publishing to Notion workspace",
+    "status": "running",
+    "id": "log_u00mp0u2",
+    "timestamp": "2026-06-26T13:20:59.047Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Strategy derived: \"Affiliate Community Free Delivery & Accessories Hook\" — 1 Vadalog rules applied",
+    "status": "success",
+    "meta": {
+      "rules": 1
+    },
+    "id": "log_7ge5sg7s",
+    "timestamp": "2026-06-26T13:20:59.047Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Analysing competitor threat for event evt_r3t3jn743qh",
+    "status": "running",
+    "id": "log_w1asjihp",
+    "timestamp": "2026-06-26T13:20:59.045Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Verified threat event evt_r3t3jn743qh — classification confirmed, routing to Strategist",
+    "status": "success",
+    "id": "log_jh79hlbv",
+    "timestamp": "2026-06-26T13:20:59.044Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "x402",
+    "message": "Micropayment captured — $0.49 USD intelligence fee",
+    "status": "success",
+    "meta": {
+      "amount": 0.49
+    },
+    "id": "log_c98atem7",
+    "timestamp": "2026-06-26T13:18:09.168Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Campaign brief published — latency 0ms",
+    "status": "success",
+    "meta": {
+      "latency_ms": 0
+    },
+    "id": "log_i1866syk",
+    "timestamp": "2026-06-26T13:18:09.168Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "actor",
+    "message": "Compiling campaign brief and publishing to Notion workspace",
+    "status": "running",
+    "id": "log_u99d2mlw",
+    "timestamp": "2026-06-26T13:18:09.166Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Strategy derived: \"Affiliate Community Free Delivery & Accessories Hook\" — 1 Vadalog rules applied",
+    "status": "success",
+    "meta": {
+      "rules": 1
+    },
+    "id": "log_8q8smifw",
+    "timestamp": "2026-06-26T13:18:09.166Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "strategist",
+    "message": "Analysing competitor threat for event evt_r3t3jn743qh",
+    "status": "running",
+    "id": "log_p878iby4",
+    "timestamp": "2026-06-26T13:18:09.164Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Verified threat event evt_r3t3jn743qh — classification confirmed, routing to Strategist",
+    "status": "success",
+    "id": "log_vi2d1u6o",
+    "timestamp": "2026-06-26T13:18:09.164Z"
+  }
+]

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getActiveTenantConfig } from "@/lib/tenant";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
     
     // Extract non-secret properties
     return NextResponse.json({

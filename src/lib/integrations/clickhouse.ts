@@ -302,6 +302,9 @@ class UniversalClickHouseClient {
 
     // Fallback logic
     const db = loadFallbackDb();
+    if (!tenantId) {
+      return db.competitor_events.find((e) => e.id === id) || null;
+    }
     return db.competitor_events.find((e) => e.tenant_id === tenantId && e.id === id) || null;
   }
 

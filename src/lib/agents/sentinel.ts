@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { runTenantSweep, type IngestedRawEvent } from "../integrations/tavily";
 import { clickhouse, type CompetitorEvent } from "../integrations/clickhouse";
 import { classifyEvent } from "../integrations/gemini";
+import { logAgentActivity } from "../agent-activity";
 
 if (typeof window !== "undefined") {
   throw new Error("This module can only be executed on the server.");
@@ -70,6 +71,14 @@ export async function executeSentinelSweep(): Promise<SweepSummary> {
   }
 
   console.log(`[Sentinel Agent] Sweep finished. Ingested total: ${rawEvents.length}. New stored: ${newEventsToStore.length}`);
+
+  await logAgentActivity({
+    tenant_id: tenant.id,
+    agent: "sentinel",
+    message: `Sweep complete — ${rawEvents.length} signals scanned, ${newEventsToStore.length} new threats classified`,
+    status: "success",
+    meta: { scanned: rawEvents.length, new: newEventsToStore.length },
+  });
 
   return {
     tenant_id: tenant.id,

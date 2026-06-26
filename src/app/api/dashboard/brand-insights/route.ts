@@ -3,9 +3,9 @@ import { getActiveTenantConfig } from "@/lib/tenant";
 import { senso } from "@/lib/integrations/senso";
 import { clickhouse } from "@/lib/integrations/clickhouse";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig();
+    const tenant = getActiveTenantConfig(request);
     const tenantId = tenant.id;
 
     // Load brand facts from Senso.ai
