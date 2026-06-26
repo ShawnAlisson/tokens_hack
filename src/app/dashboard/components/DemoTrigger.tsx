@@ -4,9 +4,18 @@ import { Play, Loader2, Sparkles, ShieldAlert, Cpu, Send, Zap } from "lucide-rea
 interface DemoTriggerProps {
   onSuccess: () => void;
   onStateChange?: (state: "idle" | "sentinel" | "strategist" | "actor" | "complete") => void;
+  onCampaignGenerated?: (campaign: {
+    title: string;
+    competitor: string;
+    strategy_angle: string;
+    content_draft: string;
+    published_url: string;
+    rules_applied?: string[];
+    brand_facts_used?: string[];
+  }) => void;
 }
 
-export default function DemoTrigger({ onSuccess, onStateChange }: DemoTriggerProps) {
+export default function DemoTrigger({ onSuccess, onStateChange, onCampaignGenerated }: DemoTriggerProps) {
   const [running, setRunning] = useState(false);
   const [currentStep, setCurrentStep] = useState<string>("");
 
@@ -43,6 +52,18 @@ export default function DemoTrigger({ onSuccess, onStateChange }: DemoTriggerPro
       // Step 4: Finished and pay x402 fee
       setCurrentStep("x402: Processing micro-payment...");
       await new Promise((resolve) => setTimeout(resolve, 800));
+
+      if (onCampaignGenerated && data.plan && data.publish) {
+        onCampaignGenerated({
+          title: data.plan.trigger_title,
+          competitor: data.plan.competitor,
+          strategy_angle: data.plan.strategy_angle,
+          content_draft: data.plan.content_draft,
+          published_url: data.publish.published_url,
+          rules_applied: data.plan.rules_applied,
+          brand_facts_used: data.plan.brand_facts_used
+        });
+      }
 
       if (onStateChange) onStateChange("complete");
       onSuccess();
