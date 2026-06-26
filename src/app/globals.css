@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Source+Sans+3:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #FAF8F5;
-  --foreground: #1E293B;
-  --card-bg: #FFFFFF;
-  --card-muted: #F5F3EF;
-  --border-color: #E7E5E0;
-  --border-strong: #D6D3CC;
-  --font-heading: 'Fraunces', Georgia, serif;
-  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --background: #faf8f5;
+  --foreground: #1e293b;
+  --card-bg: #ffffff;
+  --card-muted: #f5f3ef;
+  --border-color: #e7e5e0;
+  --border-strong: #d6d3cc;
+  --font-heading: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
 
-  --brand-primary: #0D9488;
-  --brand-primary-dark: #0F766E;
-  --brand-primary-light: #CCFBF1;
-  --brand-accent: #F97316;
-  --brand-accent-light: #FFEDD5;
-  --brand-slate: #64748B;
+  --brand-primary: #0d9488;
+  --brand-primary-dark: #0f766e;
+  --brand-primary-light: #ccfbf1;
+  --brand-accent: #f97316;
+  --brand-accent-light: #ffedd5;
+  --brand-slate: #64748b;
   --brand-success: #059669;
-  --brand-danger: #E11D48;
-  --brand-warning: #D97706;
+  --brand-danger: #e11d48;
+  --brand-warning: #d97706;
 }
 
 body {
@@ -37,7 +37,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
 }
 
@@ -59,13 +64,16 @@ h1, h2, h3, h4, h5, h6 {
 .bc-panel {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.03);
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.04),
+    0 4px 16px rgba(15, 23, 42, 0.03);
 }
 
 .bc-panel-elevated {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+  height: fit-content;
 }
 
 .bc-muted {
@@ -73,8 +81,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes bcPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.15); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.15);
+  }
 }
 
 .bc-pulse {
@@ -82,7 +97,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes bcFlow {
-  to { stroke-dashoffset: -20; }
+  to {
+    stroke-dashoffset: -20;
+  }
 }
 
 .animate-flow {
@@ -91,8 +108,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes bcFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -100,8 +123,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes bcSlideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-slide-up {
@@ -114,8 +143,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-panel-glow-emerald {
-  background: #ECFDF5;
-  border: 1px solid #A7F3D0;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
 }
 
 .pulse-glow-emerald {
@@ -130,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .pulse-glow-purple {
   @apply bc-pulse;
-  background: #7C3AED;
+  background: #7c3aed;
 }
 
 .glow-text-emerald {

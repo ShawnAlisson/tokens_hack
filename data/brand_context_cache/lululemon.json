@@ -1,0 +1,40 @@
+{
+  "tenant_id": "lululemon",
+  "display_name": "Lululemon",
+  "domain": "lululemon.co.uk",
+  "market": "UK premium activewear / wellness",
+  "logo_url": "https://www.google.com/s2/favicons?domain=lululemon.co.uk&sz=128",
+  "positioning_summary": "Lululemon is positioned as the premium wellness lifestyle brand for the mindful athlete. Unlike mass-market gym brands, Lululemon owns the intersection of yoga, running, and everyday luxury comfort.",
+  "products": [
+    {
+      "name": "Release and Recover Ball Set",
+      "price_gbp": null,
+      "category": "Product",
+      "image_url": "https://www.lebonmarche.com/on/demandware.static/-/Sites-LeBonMarche-Library/default/dw209cb6a2/MARQUES/LULULEMON/P1144875.jpg?im=FitAndFill,width=500,height=500",
+      "source_url": "https://www.lululemon.co.uk/en-gb/p/release-and-recover-ball-set/prod10190225.html"
+    },
+    {
+      "name": "lululemon Align No Line™ High-Rise Pant 28\" *Satin",
+      "price_gbp": null,
+      "category": "Product",
+      "image_url": "https://theshopsatyale.com/wp-content/smush-webp/2017/06/lululemon.jpg.webp",
+      "source_url": "https://www.lululemon.co.uk/en-gb/p/lululemon-align-no-line%E2%84%A2-high-rise-pant-28%22-satin/prod20004423.html"
+    },
+    {
+      "name": "Lululemon's latest products, including athletic apparel and ",
+      "price_gbp": null,
+      "category": "Featured",
+      "image_url": "https://images2.minutemediacdn.com/image/upload/f_auto,q_auto,g_auto/images/voltaxMediaLibrary/mmsport/serve-on-si/01k49n9323cew7aqexzj.jpg",
+      "source_url": "https://www.lululemon.co.uk"
+    },
+    {
+      "name": "A Lululemon store is situated on a city street with classic ",
+      "price_gbp": null,
+      "category": "Featured",
+      "image_url": "https://wwd.com/wp-content/uploads/2025/11/lululemon-soho-ctsy-01.jpg?w=1280",
+      "source_url": "https://www.lululemon.co.uk"
+    }
+  ],
+  "synced_at": "2026-06-26T13:38:31.522Z",
+  "source": "live"
+}

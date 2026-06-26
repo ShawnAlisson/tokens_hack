@@ -9,29 +9,56 @@ export async function GET(request: Request) {
 
   if (stream) {
     const encoder = new TextEncoder();
+    let closed = false;
+    let heartbeat: ReturnType<typeof setInterval> | null = null;
+    let unsubscribe: (() => void) | null = null;
+
     const streamBody = new ReadableStream({
       start(controller) {
-        const send = (data: unknown) => {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
+        const cleanup = () => {
+          if (closed) return;
+          closed = true;
+          if (heartbeat) clearInterval(heartbeat);
+          if (unsubscribe) unsubscribe();
+          try {
+            controller.close();
+          } catch {
+            // already closed
+          }
         };
 
-        send({ type: "init", entries: getAgentActivity(tenantId, 30), health: getAgentHealth(tenantId) });
+        const safeSend = (data: unknown) => {
+          if (closed) return;
+          try {
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
+          } catch {
+            cleanup();
+          }
+        };
 
-        const unsubscribe = subscribeAgentActivity((entry) => {
+        safeSend({ type: "init", entries: getAgentActivity(tenantId, 30), health: getAgentHealth(tenantId) });
+
+        unsubscribe = subscribeAgentActivity((entry) => {
           if (entry.tenant_id === tenantId) {
-            send({ type: "entry", entry, health: getAgentHealth(tenantId) });
+            safeSend({ type: "entry", entry, health: getAgentHealth(tenantId) });
           }
         });
 
-        const heartbeat = setInterval(() => {
-          controller.enqueue(encoder.encode(": heartbeat\n\n"));
+        heartbeat = setInterval(() => {
+          if (closed) return;
+          try {
+            controller.enqueue(encoder.encode(": heartbeat\n\n"));
+          } catch {
+            cleanup();
+          }
         }, 15000);
 
-        request.signal.addEventListener("abort", () => {
-          clearInterval(heartbeat);
-          unsubscribe();
-          controller.close();
-        });
+        request.signal.addEventListener("abort", cleanup);
+      },
+      cancel() {
+        closed = true;
+        if (heartbeat) clearInterval(heartbeat);
+        if (unsubscribe) unsubscribe();
       },
     });
 

@@ -42,8 +42,10 @@ export function loadTavilyProfiles(): any {
  * Uses Tavily if TAVILY_API_KEY is defined and TAVILY_USE_CACHE is not 'true'.
  * Otherwise, falls back to loading the latest pre-saved snapshot for this tenant.
  */
-export async function runTenantSweep(tenant: TenantConfig): Promise<IngestedRawEvent[]> {
-  const useCache = process.env.TAVILY_USE_CACHE === "true" || !process.env.TAVILY_API_KEY;
+export async function runTenantSweep(tenant: TenantConfig, options?: { forceLive?: boolean }): Promise<IngestedRawEvent[]> {
+  const useCache =
+    !options?.forceLive &&
+    (process.env.TAVILY_USE_CACHE === "true" || !process.env.TAVILY_API_KEY);
 
   if (useCache) {
     console.log(`[Tavily] Operating in CACHED mode for tenant "${tenant.id}". Reading from snapshots...`);

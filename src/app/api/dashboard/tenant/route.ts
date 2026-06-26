@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
 import { getActiveTenantConfig } from "@/lib/tenant";
+import { getBrandContext } from "@/lib/agents/brand-context";
 
 export async function GET(request: Request) {
   try {
     const tenant = getActiveTenantConfig(request);
-    
-    // Extract non-secret properties
+    const context = getBrandContext(tenant.id);
+
     return NextResponse.json({
       id: tenant.id,
       display_name: tenant.display_name,
       domain: tenant.domain,
-      logo_url: tenant.logo_url,
+      logo_url: context.logo_url,
       market: tenant.market,
       competitors: tenant.competitors,
       owned_publish_channel: {

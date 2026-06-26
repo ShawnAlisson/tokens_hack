@@ -32,8 +32,22 @@ const AGENTS = [
   { key: "x402", label: "x402", sub: "Micropayment", icon: Zap, stateKey: null },
 ];
 
+const STATE_ORDER: PipelineState[] = ["idle", "ingesting", "reasoning", "publishing", "completed"];
+
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+
+function connectorProgress(fromIdx: number, pipelineState: PipelineState): number {
+  const current = STATE_ORDER.indexOf(pipelineState);
+  const fromState = fromIdx;
+  const toState = fromIdx + 1;
+
+  if (pipelineState === "completed") return 100;
+  if (current > toState) return 100;
+  if (current === toState) return 60;
+  if (current === fromState && pipelineState !== "idle") return 40;
+  return 0;
 }
 
 export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: AgentWorkflowStripProps) {
@@ -55,7 +69,7 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
           setHealth(data.health);
         }
       } catch {
-        // ignore parse errors
+        // ignore
       }
     };
 
@@ -63,9 +77,7 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
   }, [refreshTrigger]);
 
   useEffect(() => {
-    if (logRef.current) {
-      logRef.current.scrollTop = 0;
-    }
+    if (logRef.current) logRef.current.scrollTop = 0;
   }, [entries]);
 
   const isAgentActive = (key: string, stateKey: PipelineState | null) => {
@@ -74,16 +86,14 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
     return health?.[key as keyof AgentHealth]?.status === "running";
   };
 
-  const isAgentDone = (key: string, idx: number) => {
-    const order = ["ingesting", "reasoning", "publishing", "completed"];
-    const currentIdx = order.indexOf(pipelineState);
-    const agentIdx = idx;
+  const isAgentDone = (idx: number) => {
+    const current = STATE_ORDER.indexOf(pipelineState);
     if (pipelineState === "completed") return true;
-    return currentIdx > agentIdx;
+    return current > idx;
   };
 
   return (
-    <div className="bc-panel-elevated rounded-2xl p-5 space-y-4">
+    <div className="bc-panel-elevated rounded-2xl p-5 space-y-4 h-full">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
           <h2 className="text-base font-bold text-slate-800" style={{ fontFamily: "var(--font-heading)" }}>
@@ -97,59 +107,55 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
         </div>
       </div>
 
-      {/* Pipeline nodes */}
-      <div className="relative flex items-start justify-between px-2 sm:px-8">
+      {/* Pipeline: node — line — node — line — node — line — node */}
+      <div className="flex items-start w-full">
         {AGENTS.map((agent, idx) => {
           const Icon = agent.icon;
           const active = isAgentActive(agent.key, agent.stateKey);
-          const done = isAgentDone(agent.key, idx);
+          const done = isAgentDone(idx);
           const agentHealth = health?.[agent.key as keyof AgentHealth];
+          const progress = idx < AGENTS.length - 1 ? connectorProgress(idx, pipelineState) : 0;
 
           return (
-            <div key={agent.key} className="flex flex-col items-center gap-1.5 z-10 flex-1">
-              {idx < AGENTS.length - 1 && (
-                <div className="absolute top-7 hidden sm:block h-0.5 bg-slate-200" style={{
-                  left: `${12 + idx * 25}%`,
-                  width: "20%",
-                }}>
-                  <div
-                    className={`h-full bg-teal-500 transition-all duration-500 ${
-                      done ? "w-full" : active ? "w-1/2 animate-pulse" : "w-0"
-                    }`}
-                  />
+            <div key={agent.key} className="flex items-start flex-1 min-w-0">
+              <div className="flex flex-col items-center gap-1 flex-shrink-0 w-full max-w-[88px] mx-auto">
+                <div
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border-2 transition-all duration-300 ${
+                    active
+                      ? "bg-teal-50 border-teal-500 shadow-lg shadow-teal-500/20"
+                      : done
+                      ? "bg-emerald-50 border-emerald-400"
+                      : "bg-white border-slate-200"
+                  }`}
+                >
+                  {done && !active ? (
+                    <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                  ) : (
+                    <Icon className={`w-6 h-6 ${active ? "text-teal-600 animate-pulse" : done ? "text-emerald-600" : "text-slate-400"}`} />
+                  )}
                 </div>
-              )}
-
-              <div
-                className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center border-2 transition-all duration-300 ${
-                  active
-                    ? "bg-teal-50 border-teal-500 scale-105 shadow-lg shadow-teal-500/20"
-                    : done
-                    ? "bg-emerald-50 border-emerald-400"
-                    : "bg-white border-slate-200"
-                }`}
-              >
-                {done && pipelineState !== "idle" && !active ? (
-                  <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-                ) : (
-                  <Icon className={`w-6 h-6 ${active ? "text-teal-600 animate-pulse" : done ? "text-emerald-600" : "text-slate-400"}`} />
+                <span className="text-[10px] sm:text-xs font-bold text-slate-700 text-center">{agent.label}</span>
+                <span className="text-[9px] text-slate-400 text-center hidden sm:block leading-tight">{agent.sub}</span>
+                {agentHealth?.lastRun && (
+                  <span className="text-[8px] text-slate-400 font-mono">{formatTime(agentHealth.lastRun)}</span>
                 )}
               </div>
 
-              <span className="text-[10px] sm:text-xs font-bold text-slate-700">{agent.label}</span>
-              <span className="text-[9px] text-slate-400 hidden sm:block">{agent.sub}</span>
-
-              {agentHealth?.lastRun && (
-                <span className="text-[8px] text-slate-400 font-mono">
-                  {formatTime(agentHealth.lastRun)}
-                </span>
+              {idx < AGENTS.length - 1 && (
+                <div className="flex-1 flex items-center pt-7 px-1 min-w-[12px]">
+                  <div className="w-full h-0.5 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-teal-500 rounded-full transition-all duration-500"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                </div>
               )}
             </div>
           );
         })}
       </div>
 
-      {/* Live activity log */}
       <div className="bc-muted rounded-xl border border-slate-200 overflow-hidden">
         <div className="px-3 py-2 border-b border-slate-200 flex items-center justify-between">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Activity log</span>
@@ -176,7 +182,7 @@ export default function AgentWorkflowStrip({ pipelineState, refreshTrigger }: Ag
             ))
           ) : (
             <p className="px-3 py-4 text-xs text-slate-400 text-center">
-              Waiting for agent activity. Trigger a strike on a threat below to see the pipeline in action.
+              Waiting for agent activity. Trigger a strike on a threat below.
             </p>
           )}
         </div>

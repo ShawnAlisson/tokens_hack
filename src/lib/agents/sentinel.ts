@@ -1,4 +1,4 @@
-import { getActiveTenantConfig } from "../tenant";
+import { getTenantConfig, type TenantConfig } from "../tenant";
 import crypto from "crypto";
 import { runTenantSweep, type IngestedRawEvent } from "../integrations/tavily";
 import { clickhouse, type CompetitorEvent } from "../integrations/clickhouse";
@@ -23,12 +23,14 @@ export interface SweepSummary {
  * Sentinel Agent - executes a full competitive intelligence sweep cycle.
  * Ingests data, filters duplicates, classifies severity/category, and stores results.
  */
-export async function executeSentinelSweep(): Promise<SweepSummary> {
-  const tenant = getActiveTenantConfig();
+export async function executeSentinelSweep(
+  tenantId?: string,
+  options?: { forceLive?: boolean }
+): Promise<SweepSummary> {
+  const tenant = getTenantConfig(tenantId);
   console.log(`[Sentinel Agent] Starting sweep for brand: "${tenant.display_name}" (${tenant.id})`);
 
-  // 1. Fetch raw news/events from Tavily (or cache fallback)
-  const rawEvents = await runTenantSweep(tenant);
+  const rawEvents = await runTenantSweep(tenant, { forceLive: options?.forceLive });
 
   // 2. Fetch existing stored events from ClickHouse to perform deduplication
   const existingEvents = await clickhouse.getCompetitorEvents(tenant.id, 500);

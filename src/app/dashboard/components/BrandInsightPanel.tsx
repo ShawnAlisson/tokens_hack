@@ -14,6 +14,11 @@ interface BrandInsights {
   threat_score: number;
 }
 
+function mediaUrl(url: string) {
+  if (!url) return "";
+  return `/api/dashboard/media?url=${encodeURIComponent(url)}`;
+}
+
 export default function BrandInsightPanel({ refreshTrigger }: { refreshTrigger: number }) {
   const [insights, setInsights] = useState<BrandInsights | null>(null);
 
@@ -41,9 +46,12 @@ export default function BrandInsightPanel({ refreshTrigger }: { refreshTrigger: 
       <div className="flex items-center gap-3">
         {insights.logo_url && (
           <img
-            src={insights.logo_url}
+            src={mediaUrl(insights.logo_url)}
             alt={insights.display_name}
             className="w-10 h-10 object-contain rounded-lg bg-white border border-slate-200 p-1"
+            onError={(e) => {
+              e.currentTarget.src = `https://www.google.com/s2/favicons?domain=${insights.domain}&sz=128`;
+            }}
           />
         )}
         <div>
@@ -68,11 +76,10 @@ export default function BrandInsightPanel({ refreshTrigger }: { refreshTrigger: 
 
       <div className="flex items-center justify-between pt-2 border-t border-slate-200">
         <div>
-          <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Threat Level</h4>
-          <span className={`text-lg font-bold ${
-            insights.threat_level === "Critical" ? "text-rose-600" :
-            insights.threat_level === "Elevated" ? "text-amber-600" : "text-emerald-600"
-          }`}>
+          <h4 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+            <ShieldCheck className="w-3 h-3" /> Threat Level
+          </h4>
+          <span className={`text-lg font-bold ${insights.threat_color}`}>
             {insights.threat_level}
           </span>
           <span className="text-xs text-slate-400 ml-1">({insights.threat_score}%)</span>
@@ -81,9 +88,6 @@ export default function BrandInsightPanel({ refreshTrigger }: { refreshTrigger: 
           <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
             <div className={`h-full rounded-full transition-all duration-1000 ${threatBarColor}`} style={{ width: `${insights.threat_score}%` }} />
           </div>
-          <p className="text-[9px] text-slate-400 mt-1 flex items-center gap-1 justify-end">
-            <ShieldCheck className="w-3 h-3" /> Monitoring
-          </p>
         </div>
       </div>
     </div>

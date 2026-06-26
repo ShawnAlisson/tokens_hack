@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
-import { getActiveTenantConfig } from "@/lib/tenant";
+import { resolveTenantId } from "@/lib/tenant";
+import { getBrandContext } from "@/lib/agents/brand-context";
 
 export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig(request);
+    const tenantId = resolveTenantId(request);
+    const context = getBrandContext(tenantId);
     return NextResponse.json({
-      products: tenant.products ?? [],
-      display_name: tenant.display_name,
+      products: context.products,
+      display_name: context.display_name,
+      logo_url: context.logo_url,
+      synced_at: context.synced_at,
+      source: context.source,
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";

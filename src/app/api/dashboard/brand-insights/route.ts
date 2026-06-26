@@ -1,62 +1,50 @@
 import { NextResponse } from "next/server";
-import { getActiveTenantConfig } from "@/lib/tenant";
-import { senso } from "@/lib/integrations/senso";
+import { resolveTenantId } from "@/lib/tenant";
+import { getBrandContext } from "@/lib/agents/brand-context";
 import { clickhouse } from "@/lib/integrations/clickhouse";
+import { senso } from "@/lib/integrations/senso";
 
 export async function GET(request: Request) {
   try {
-    const tenant = getActiveTenantConfig(request);
-    const tenantId = tenant.id;
+    const tenantId = resolveTenantId(request);
+    const context = getBrandContext(tenantId);
 
-    // Load brand facts from Senso.ai
     const facts = await senso.queryKnowledgeBase(tenantId, "positioning", 5);
-    const positioningFact = facts.find(f => f.category === "positioning") || facts[0];
-    const positioningSummary = positioningFact 
-      ? positioningFact.content 
-      : `${tenant.display_name} focuses on delivering high-quality, high-performance apparel engineered for everyday dedicated athletes.`;
+    const positioningFact = facts.find((f) => f.category === "positioning") || facts[0];
+    const positioning_summary = context.positioning_summary || positioningFact?.content ||
+      `${context.display_name} focuses on delivering high-quality products in ${context.market}.`;
 
-    // Fetch clickhouse events to dynamically calculate the threat rating
     const events = await clickhouse.getCompetitorEvents(tenantId, 100);
-    
     let highCount = 0;
     let mediumCount = 0;
-    
-    events.forEach(e => {
+    events.forEach((e) => {
       if (e.severity === "high") highCount++;
       else if (e.severity === "medium") mediumCount++;
     });
 
-    // Calculate dynamic threat index (score from 0 to 100)
-    let threatScore = 15; // baseline threat
-    threatScore += (mediumCount * 8) + (highCount * 22);
+    let threatScore = 15 + mediumCount * 8 + highCount * 22;
     if (threatScore > 100) threatScore = 100;
 
     let threatLevel: "Critical" | "Elevated" | "Low" = "Low";
-    let threatColor = "text-emerald-500";
-
-    if (threatScore >= 70) {
-      threatLevel = "Critical";
-      threatColor = "text-rose-500";
-    } else if (threatScore >= 35) {
-      threatLevel = "Elevated";
-      threatColor = "text-amber-500";
-    }
+    if (threatScore >= 70) threatLevel = "Critical";
+    else if (threatScore >= 35) threatLevel = "Elevated";
 
     return NextResponse.json({
-      display_name: tenant.display_name,
-      domain: tenant.domain,
-      market: tenant.market,
-      logo_url: tenant.logo_url,
-      positioning_summary: positioningSummary,
+      display_name: context.display_name,
+      domain: context.domain,
+      market: context.market,
+      logo_url: context.logo_url,
+      positioning_summary,
       threat_level: threatLevel,
-      threat_color: threatColor,
+      threat_color:
+        threatLevel === "Critical" ? "text-rose-600" :
+        threatLevel === "Elevated" ? "text-amber-600" : "text-emerald-600",
       threat_score: threatScore,
+      products_synced_at: context.synced_at,
+      products_source: context.source,
     });
-  } catch (error: any) {
-    console.error("[Brand Insights API] Error:", error);
-    return NextResponse.json(
-      { error: "Failed to load brand insights", details: error.message },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

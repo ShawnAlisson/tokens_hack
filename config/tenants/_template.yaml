@@ -1,11 +1,12 @@
 # White-Label Tenant Configuration Template
 # To onboard a new brand, copy this file to {brand_id}.yaml and fill in the values below.
+# Products, logo, and positioning are fetched dynamically by the Brand Context Agent.
 
-id: tenant_id                    # Uniquely identifies the tenant, matches filename (e.g. nike)
-display_name: Tenant Brand Name  # Human readable brand name shown in dashboard (e.g. Nike)
-domain: tenantbrand.com          # Primary brand domain
-logo_url: https://...            # Image URL for the brand's logo
-market: Market Segment           # Description of market focus (e.g. UK Footwear / Retail)
+id: tenant_id
+display_name: Tenant Brand Name
+domain: tenantbrand.com
+logo_url: ""
+market: Market Segment
 
 competitors:
   - name: Competitor One
