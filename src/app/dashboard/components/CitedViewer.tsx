@@ -7,7 +7,8 @@ interface CitationRow {
   eventText: string;
   eventUrl: string;
   strategy: string;
-  notionUrl: string;
+  briefUrl: string;
+  briefLabel: string;
   timestamp: string;
 }
 
@@ -27,12 +28,13 @@ export default function CitedViewer({ refreshTrigger }: { refreshTrigger: number
           const cols = line.split("|").map((c: string) => c.trim()).filter((_: string, idx: number, arr: string[]) => idx > 0 && idx < arr.length - 1);
           if (cols.length >= 4) {
             const eventLinkMatch = cols[0].match(/\[(.*?)\]\((.*?)\)/);
-            const notionLinkMatch = cols[2].match(/\[(.*?)\]\((.*?)\)/);
+            const briefLinkMatch = cols[2].match(/\[(.*?)\]\((.*?)\)/);
             parsed.push({
               eventText: eventLinkMatch?.[1] ?? cols[0],
               eventUrl: eventLinkMatch?.[2] ?? "#",
               strategy: cols[1],
-              notionUrl: notionLinkMatch?.[2] ?? "#",
+              briefUrl: briefLinkMatch?.[2] ?? "#",
+              briefLabel: briefLinkMatch?.[1] ?? "Brief",
               timestamp: cols[3],
             });
           }
@@ -80,8 +82,8 @@ export default function CitedViewer({ refreshTrigger }: { refreshTrigger: number
                   </td>
                   <td className="py-2.5 pr-4 text-violet-600 font-medium">{row.strategy}</td>
                   <td className="py-2.5 pr-4">
-                    <a href={row.notionUrl} target="_blank" rel="noreferrer" className="text-emerald-600 font-bold text-[10px] flex items-center gap-1">
-                      Notion <Link className="w-3 h-3" />
+                    <a href={row.briefUrl} target="_blank" rel="noreferrer" className="text-emerald-600 font-bold text-[10px] flex items-center gap-1">
+                      {row.briefLabel.includes("Notion") ? "Notion" : "cited.md"} <Link className="w-3 h-3" />
                     </a>
                   </td>
                   <td className="py-2.5 text-right text-slate-400">

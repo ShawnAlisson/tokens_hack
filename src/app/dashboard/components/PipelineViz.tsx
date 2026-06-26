@@ -86,7 +86,7 @@ export default function PipelineViz({ state }: { state: PipelineState }) {
             )}
           </div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">3. Actor</span>
-          <span className="text-[8px] text-slate-500 font-semibold uppercase">Notion Publish</span>
+          <span className="text-[8px] text-slate-500 font-semibold uppercase">cited.md Publish</span>
         </div>
       </div>
 
@@ -107,12 +107,12 @@ export default function PipelineViz({ state }: { state: PipelineState }) {
         )}
         {state === "publishing" && (
           <p className="text-xs text-emerald-400 font-medium animate-pulse">
-            [Actor] Structuring marketing brief and publishing to Notion workspace...
+            [Actor] Structuring marketing brief and publishing to cited.md...
           </p>
         )}
         {state === "completed" && (
           <p className="text-xs text-emerald-400 font-bold">
-            ✔ Counter-strike successfully published on live Notion page!
+            ✔ Counter-strike successfully published on cited.md!
           </p>
         )}
       </div>

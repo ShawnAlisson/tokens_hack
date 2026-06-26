@@ -14,6 +14,7 @@ export interface OwnedPublishChannel {
   type: string;
   database_id: string;
   workspace_url: string;
+  geo_question_id?: string;
 }
 
 export interface TenantProduct {
@@ -95,9 +96,13 @@ function loadTenantFile(configPath: string): TenantConfig {
     market: config.market || "",
     competitors: config.competitors || [],
     owned_publish_channel: {
-      type: config.owned_publish_channel?.type || "notion",
+      type: config.owned_publish_channel?.type || "citedmd",
       database_id: config.owned_publish_channel?.database_id || process.env.NOTION_DATABASE_ID || "",
       workspace_url: config.owned_publish_channel?.workspace_url || "",
+      geo_question_id:
+        config.owned_publish_channel?.geo_question_id ||
+        process.env.CITED_MD_GEO_QUESTION_ID ||
+        undefined,
     },
     tavily_search_profiles: config.tavily_search_profiles || [],
     products: config.products || [],

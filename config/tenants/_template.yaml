@@ -15,9 +15,9 @@ competitors:
     domains: [competitor2.com]
 
 owned_publish_channel:
-  type: notion
-  database_id: ${NOTION_DATABASE_ID}   # Kept in server-side .env file only
-  workspace_url: https://notion.so/...
+  type: citedmd
+  database_id: ""
+  workspace_url: https://cited.md
 
 tavily_search_profiles:
   - brand_mentions

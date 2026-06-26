@@ -2,7 +2,7 @@ import { getTenantConfig, type TenantConfig } from "../tenant";
 import crypto from "crypto";
 import { runTenantSweep, type IngestedRawEvent } from "../integrations/tavily";
 import { clickhouse, type CompetitorEvent } from "../integrations/clickhouse";
-import { classifyEvent } from "../integrations/gemini";
+import { classifyEvent } from "../integrations/classifier";
 import { logAgentActivity } from "../agent-activity";
 
 if (typeof window !== "undefined") {
@@ -50,7 +50,7 @@ export async function executeSentinelSweep(
 
     console.log(`[Sentinel Agent] Processing new event: "${raw.title}"`);
 
-    // Classify using Gemini Flash (or offline local heuristics)
+    // Classify: REE (Modal/cached) → Gemini → heuristics
     const classification = await classifyEvent(raw.title, raw.snippet);
 
     const fullEvent: CompetitorEvent = {
@@ -65,6 +65,8 @@ export async function executeSentinelSweep(
       snippet: classification.summary || raw.snippet,
       inserted_at: new Date().toISOString(),
       processed: false,
+      classification_source: classification.source,
+      ree_receipt_hash: classification.ree_receipt_hash,
     };
 
     // Insert into ClickHouse

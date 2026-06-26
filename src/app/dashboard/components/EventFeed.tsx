@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import {
   BellRing, DollarSign, Rocket, Users, LineChart, Scale,
-  HelpCircle, Link, Loader2, Zap,
+  HelpCircle, Link, Loader2, Zap, ShieldCheck,
 } from "lucide-react";
 
 interface CompetitorEvent {
@@ -15,6 +15,8 @@ interface CompetitorEvent {
   title: string;
   snippet: string;
   inserted_at: string;
+  classification_source?: "ree_live" | "ree_cached" | "gemini" | "heuristic";
+  ree_receipt_hash?: string;
 }
 
 export default function EventFeed({
@@ -133,6 +135,18 @@ export default function EventFeed({
                     {getSourceIcon(evt.source_type)}
                   </span>
                   <span className="text-xs font-bold text-slate-700">{evt.competitor}</span>
+                  {(evt.classification_source === "ree_live" || evt.classification_source === "ree_cached") && (
+                    <a
+                      href={evt.ree_receipt_hash ? `/api/dashboard/ree/receipt/${evt.ree_receipt_hash}` : "#"}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Gensyn REE verifiable classification receipt"
+                      className="flex items-center gap-0.5 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase bg-violet-50 text-violet-700 border border-violet-200 hover:bg-violet-100"
+                    >
+                      <ShieldCheck className="w-2.5 h-2.5" />
+                      REE
+                    </a>
+                  )}
                 </div>
                 <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${
                   evt.severity === "high" ? "bg-rose-50 text-rose-600 border border-rose-200" :

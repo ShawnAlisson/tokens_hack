@@ -5,10 +5,10 @@ import path from "path";
 import { getActiveTenantConfig } from "../src/lib/tenant";
 import { clickhouse } from "../src/lib/integrations/clickhouse";
 import { runTenantSweep } from "../src/lib/integrations/tavily";
-import { classifyEvent } from "../src/lib/integrations/gemini";
+import { classifyEvent } from "../src/lib/integrations/classifier";
 import { senso } from "../src/lib/integrations/senso";
 import { prometheux } from "../src/lib/integrations/prometheux";
-import { notion } from "../src/lib/integrations/notion";
+import { citedmd } from "../src/lib/integrations/citedmd";
 import { executeSentinelSweep } from "../src/lib/agents/sentinel";
 import { executeStrategistAnalysis } from "../src/lib/agents/strategist";
 import { executeActorPublish } from "../src/lib/agents/actor";
@@ -187,8 +187,12 @@ async function runTests() {
     assert(analysis.lineage.length > 0, "Expected explanation lineages");
   });
 
-  // --- CHECK 7: Notion Publisher Simulation ---
-  await testStep("Notion Campaign Brief Publisher Driver", async () => {
+  // --- CHECK 7: Cited.md Publisher Simulation ---
+  await testStep("Cited.md Campaign Brief Publisher Driver", async () => {
+    const savedSensoKey = process.env.SENSO_API_KEY;
+    delete process.env.SENSO_API_KEY;
+
+    try {
     const mockPlan = {
       event_id: "evt_mock_999",
       tenant_id: TEST_TENANT_ID,
@@ -201,9 +205,13 @@ async function runTests() {
       brand_facts_used: ["USP Multi-buy"],
     };
 
-    const pubResult = await notion.publishCampaignBrief(mockPlan);
-    assert(pubResult.published_url.includes("notion.so"), "Expected published URL on Notion domain");
-    assert(pubResult.notion_page_id.length > 0, "Expected Notion page ID");
+    const pubResult = await citedmd.publishCampaignBrief(mockPlan);
+    assert(pubResult.published_url.includes("cited.md"), "Expected published URL on cited.md domain");
+    assert(pubResult.content_id.length > 0, "Expected cited.md content ID");
+    } finally {
+      if (savedSensoKey) process.env.SENSO_API_KEY = savedSensoKey;
+      else delete process.env.SENSO_API_KEY;
+    }
   });
 
   // --- CHECK 8: Sentinel Agent Sweep Orchestration ---
@@ -272,6 +280,9 @@ async function runTests() {
 
   // --- CHECK 10: Actor Agent Strategic Publisher & Citations Tracker ---
   await testStep("Actor Agent Publisher, Latency Telemetry & Citations Tracer", async () => {
+    const savedSensoKey = process.env.SENSO_API_KEY;
+    delete process.env.SENSO_API_KEY;
+
     const originalDbBackupPath = path.join(process.cwd(), "data", "db_fallback_backup.json");
     const dbPath = path.join(process.cwd(), "data", "db_fallback.json");
     if (fs.existsSync(dbPath)) {
@@ -319,7 +330,7 @@ async function runTests() {
 
       const summary = await executeActorPublish(mockPlan);
       assert(summary.action_id.startsWith("act_"), "Expected valid counter-action ID format");
-      assert(summary.published_url.includes("notion.so"), "Expected mock Notion URL");
+      assert(summary.published_url.includes("cited.md"), "Expected mock cited.md URL");
       assert(summary.latency_ms >= 0, "Expected a non-negative execution latency");
 
       // Verify cited.md contains the trace
@@ -327,9 +338,12 @@ async function runTests() {
       const citedContent = fs.readFileSync(originalCitedPath, "utf8");
       assert(citedContent.includes("Lululemon organic fabrics range"), "Citations trace missing original event title");
       assert(citedContent.includes("Sustainable Highlight Campaign"), "Citations trace missing derived strategy angle");
-      assert(citedContent.includes("Notion Campaign Page"), "Citations trace missing published brief link");
+      assert(citedContent.includes("Cited.md Brief"), "Citations trace missing published brief link");
 
     } finally {
+      if (savedSensoKey) process.env.SENSO_API_KEY = savedSensoKey;
+      else delete process.env.SENSO_API_KEY;
+
       // Restore ClickHouse file
       if (fs.existsSync(originalDbBackupPath)) {
         fs.copyFileSync(originalDbBackupPath, dbPath);

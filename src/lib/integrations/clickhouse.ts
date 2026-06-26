@@ -18,6 +18,8 @@ export interface CompetitorEvent {
   snippet: string;
   inserted_at: string;
   processed: boolean;
+  classification_source?: "ree_live" | "ree_cached" | "gemini" | "heuristic";
+  ree_receipt_hash?: string;
 }
 
 export interface CounterAction {

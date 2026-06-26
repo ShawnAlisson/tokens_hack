@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     await logAgentActivity({
       tenant_id: tenantId,
       agent: "actor",
-      message: "Compiling campaign brief and publishing to Notion workspace",
+      message: "Compiling campaign brief and publishing to cited.md",
       status: "running",
     });
 

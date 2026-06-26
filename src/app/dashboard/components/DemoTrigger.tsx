@@ -35,7 +35,7 @@ export default function DemoTrigger({ onSuccess, onStateChange, onCampaignGenera
       await new Promise((resolve) => setTimeout(resolve, 1200));
 
       // Step 3: Actor publishing
-      setCurrentStep("Actor: Publishing Brief to Notion...");
+      setCurrentStep("Actor: Publishing brief to cited.md...");
       if (onStateChange) onStateChange("actor");
       
       const res = await fetch("/api/dashboard/trigger-demo", {
@@ -144,7 +144,7 @@ export default function DemoTrigger({ onSuccess, onStateChange, onCampaignGenera
             <div className="bg-slate-950/40 border border-white/5 p-3 rounded-xl">
               <Send className="w-5 h-5 text-emerald-400" />
               <p className="text-xs font-bold text-white mt-1.5">3. Actor</p>
-              <p className="text-[10px] text-slate-400 mt-0.5">Synchronizes Notion marketing briefs</p>
+              <p className="text-[10px] text-slate-400 mt-0.5">Publishes campaign briefs to cited.md</p>
             </div>
             <div className="bg-slate-950/40 border border-white/5 p-3 rounded-xl">
               <Zap className="w-5 h-5 text-emerald-500" />

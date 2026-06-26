@@ -15,9 +15,11 @@ competitors:
   - name: Under Armour
     domains: [underarmour.co.uk]
 owned_publish_channel:
-  type: notion
-  database_id: ${NOTION_DATABASE_ID}
-  workspace_url: https://notion.so/gymshark-workspace
+  type: citedmd
+  database_id: ""
+  workspace_url: https://cited.md
+  # Optional: pin a retail-specific Senso GEO prompt for cited.md
+  # geo_question_id: your-prompt-uuid
 tavily_search_profiles:
   - brand_mentions
   - competitor_launches

@@ -61,7 +61,7 @@ export default function MetricsBar({ refreshTrigger }: { refreshTrigger: number 
             <h3 className="text-xl font-bold text-slate-800 mt-0.5">
               {metrics.avgLatencyMs > 0 ? `${metrics.avgLatencyMs.toLocaleString()}ms` : "—"}
             </h3>
-            <p className="text-[10px] text-slate-400 mt-0.5">Detect to Notion</p>
+            <p className="text-[10px] text-slate-400 mt-0.5">Detect to cited.md</p>
           </div>
           <div className="p-2.5 rounded-xl bg-violet-50">
             <Cpu className="w-5 h-5 text-violet-600" />
