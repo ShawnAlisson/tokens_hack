@@ -1,6 +1,107 @@
 [
   {
     "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_i29teu5s",
+    "timestamp": "2026-06-26T14:05:10.484Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Sweep complete — 78 signals scanned, 0 new threats classified",
+    "status": "success",
+    "meta": {
+      "scanned": 78,
+      "new": 0
+    },
+    "id": "log_le8crha5",
+    "timestamp": "2026-06-26T14:01:47.950Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_sncxw6ju",
+    "timestamp": "2026-06-26T14:01:45.234Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Sweep complete — 78 signals scanned, 0 new threats classified",
+    "status": "success",
+    "meta": {
+      "scanned": 78,
+      "new": 0
+    },
+    "id": "log_5679daqd",
+    "timestamp": "2026-06-26T14:01:42.379Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_b1tk5moy",
+    "timestamp": "2026-06-26T14:01:39.791Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "sentinel",
+    "message": "Sweep complete — 78 signals scanned, 0 new threats classified",
+    "status": "success",
+    "meta": {
+      "scanned": 78,
+      "new": 0
+    },
+    "id": "log_s8grudod",
+    "timestamp": "2026-06-26T14:01:34.850Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand context ready — 4 products, logo resolved, Senso positioning loaded",
+    "status": "success",
+    "meta": {
+      "products": 4
+    },
+    "id": "log_th9wwo0b",
+    "timestamp": "2026-06-26T14:01:32.113Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_80aap734",
+    "timestamp": "2026-06-26T14:01:30.651Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_ic5z60bi",
+    "timestamp": "2026-06-26T14:01:24.084Z"
+  },
+  {
+    "tenant_id": "gymshark",
+    "agent": "system",
+    "message": "Brand Context Agent syncing live data for Gymshark",
+    "status": "running",
+    "id": "log_yiu4qu32",
+    "timestamp": "2026-06-26T14:01:17.891Z"
+  },
+  {
+    "tenant_id": "gymshark",
     "agent": "sentinel",
     "message": "Sweep complete — 78 signals scanned, 17 new threats classified",
     "status": "success",

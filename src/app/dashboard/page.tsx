@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import {
-  Sparkles, Calendar, Zap, FileText, Copy, ExternalLink,
+  Calendar, Zap, FileText, Copy, ExternalLink,
   ShieldCheck, Flame, ChevronDown, Loader2, LogOut,
 } from "lucide-react";
 import BrandOnboarding from "./components/BrandOnboarding";
@@ -174,9 +174,7 @@ export default function Dashboard() {
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center shadow-md shadow-teal-600/20">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
+          <img src="/logo.png" alt="BrandCompete Logo" className="w-10 h-10 object-contain rounded-xl shadow-md shadow-teal-600/10" />
           <div>
             <h1 className="text-xl font-bold text-slate-900" style={{ fontFamily: "var(--font-heading)" }}>
               BrandCompete

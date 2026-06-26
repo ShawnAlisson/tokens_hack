@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Loader2, Search, Sparkles } from "lucide-react";
+import { ArrowRight, Loader2, Search } from "lucide-react";
 
 interface TenantSummary {
   id: string;
@@ -17,7 +17,7 @@ interface BrandOnboardingProps {
 
 export default function BrandOnboarding({ onComplete }: BrandOnboardingProps) {
   const [tenants, setTenants] = useState<TenantSummary[]>([]);
-  const [query, setQuery] = useState("Gymshark");
+  const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<TenantSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -29,11 +29,6 @@ export default function BrandOnboarding({ onComplete }: BrandOnboardingProps) {
       .then((data) => {
         const list: TenantSummary[] = data.tenants || [];
         setTenants(list);
-        const gymshark = list.find((t) => t.id === "gymshark") || list[0];
-        if (gymshark) {
-          setSelected(gymshark);
-          setQuery(gymshark.display_name);
-        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -82,9 +77,7 @@ export default function BrandOnboarding({ onComplete }: BrandOnboardingProps) {
       <div className="w-full max-w-lg animate-slide-up">
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
+            <img src="/logo.png" alt="BrandCompete Logo" className="w-10 h-10 object-contain rounded-xl" />
             <span className="text-2xl font-bold text-slate-800" style={{ fontFamily: "var(--font-heading)" }}>
               BrandCompete
             </span>
@@ -107,7 +100,6 @@ export default function BrandOnboarding({ onComplete }: BrandOnboardingProps) {
                 setQuery(e.target.value);
                 setShowResults(true);
               }}
-              onFocus={() => setShowResults(true)}
               placeholder="Search brands… e.g. Gymshark"
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500"
             />
