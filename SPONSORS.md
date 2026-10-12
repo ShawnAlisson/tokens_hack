@@ -24,42 +24,44 @@ flowchart LR
 
 **Three agents, one pipeline:**
 
-| Agent | Role | Sponsors used |
-|-------|------|---------------|
-| **Sentinel** | Ingest & classify competitor signals | Tavily, REE + Modal, Gemini |
-| **Strategist** | Reason & draft counter-campaigns | ClickHouse, Senso, Prometheux, Gemini |
-| **Actor** | Publish & audit | Senso (cited.md), ClickHouse, x402 |
+| Agent          | Role                                 | Sponsors used                         |
+| -------------- | ------------------------------------ | ------------------------------------- |
+| **Sentinel**   | Ingest & classify competitor signals | Tavily, REE + Modal, Gemini           |
+| **Strategist** | Reason & draft counter-campaigns     | ClickHouse, Senso, Prometheux, Gemini |
+| **Actor**      | Publish & audit                      | Senso (cited.md), ClickHouse, x402    |
 
 ---
 
 ## 1. Tavily — Open-Web Ingestion (Sentinel)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/tavily.ts`, `config/tavily_profiles.yaml` |
-| **Triggered by** | Sentinel sweep (`src/lib/agents/sentinel.ts`) |
-| **Env vars** | `TAVILY_API_KEY`, `TAVILY_USE_CACHE` |
+|                  |                                                                 |
+| ---------------- | --------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/tavily.ts`, `config/tavily_profiles.yaml` |
+| **Triggered by** | Sentinel sweep (`src/lib/agents/sentinel.ts`)                   |
+| **Env vars**     | `TAVILY_API_KEY`, `TAVILY_USE_CACHE`                            |
 
 **What it does:** Runs tenant-specific search profiles (pricing, launches, mentions, trends, comparisons) against competitor domains defined in `config/tenants/*.yaml`.
 
 **Fallback:** Reads cached snapshots from `data/snapshots/{tenant}/` when `TAVILY_USE_CACHE=true` or no API key is set.
 
 **Scripts:**
+
 - `scripts/cache-tavily-snapshot.ts` — bakes a live sweep to disk for reliable demos
 
 ---
 
 ## 2. Gensyn REE + Modal — Verifiable Threat Classification (Sentinel)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/ree.ts`, `src/lib/integrations/classifier.ts`, `services/ree-modal/app.py` |
-| **Triggered by** | Sentinel classification pipeline |
-| **Env vars** | `REE_SERVICE_URL`, `REE_USE_CACHE`, `REE_MODEL_NAME`, `REE_GPU`, `MODAL_TOKEN_ID`, `MODAL_TOKEN_SECRET` |
+|                  |                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/ree.ts`, `src/lib/integrations/classifier.ts`, `services/ree-modal/app.py`        |
+| **Triggered by** | Sentinel classification pipeline                                                                        |
+| **Env vars**     | `REE_SERVICE_URL`, `REE_USE_CACHE`, `REE_MODEL_NAME`, `REE_GPU`, `MODAL_TOKEN_ID`, `MODAL_TOKEN_SECRET` |
 
 **What it does:** Classifies each ingested event (severity, category, summary) and produces a cryptographic REE receipt proving the inference was reproducible.
 
 **Classification chain:**
+
 1. Cached receipts (`data/ree_receipts/`)
 2. Live Modal GPU endpoint (`REE_SERVICE_URL`)
 3. Gemini (fallback)
@@ -70,17 +72,18 @@ flowchart LR
 **Dashboard:** Event feed shows a REE badge linking to `/api/dashboard/ree/receipt/{hash}`.
 
 **Scripts:**
+
 - `scripts/bake-ree-receipts.ts` — pre-bakes demo receipts for offline demos
 
 ---
 
 ## 3. Google DeepMind (Gemini 2.5 Flash) — Classification & Copywriting
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/gemini.ts`, `src/lib/agents/strategist.ts` |
-| **Triggered by** | Sentinel (fallback classifier), Strategist (copywriter) |
-| **Env vars** | `GEMINI_API_KEY` |
+|                  |                                                                  |
+| ---------------- | ---------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/gemini.ts`, `src/lib/agents/strategist.ts` |
+| **Triggered by** | Sentinel (fallback classifier), Strategist (copywriter)          |
+| **Env vars**     | `GEMINI_API_KEY`                                                 |
 
 **Two jobs:**
 
@@ -93,13 +96,14 @@ flowchart LR
 
 ## 4. ClickHouse — Event Store & Analytics
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/clickhouse.ts` |
-| **Triggered by** | All three agents + dashboard APIs |
-| **Env vars** | `CLICKHOUSE_HOST`, `CLICKHOUSE_KEY_ID`, `CLICKHOUSE_KEY_SECRET` |
+|                  |                                                                 |
+| ---------------- | --------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/clickhouse.ts`                            |
+| **Triggered by** | All three agents + dashboard APIs                               |
+| **Env vars**     | `CLICKHOUSE_HOST`, `CLICKHOUSE_KEY_ID`, `CLICKHOUSE_KEY_SECRET` |
 
 **What it stores:**
+
 - Competitor events (with REE receipt metadata)
 - Published counter-actions (latency, URLs)
 - x402 revenue events
@@ -109,6 +113,7 @@ flowchart LR
 **Fallback:** `data/db_fallback.json` when `CLICKHOUSE_HOST` is unset.
 
 **Scripts:**
+
 - `scripts/setup-clickhouse.ts` — creates tables or verifies fallback state
 - `scripts/seed-demo-data.ts` — seeds demo events and briefs
 
@@ -120,11 +125,11 @@ Senso is used in **two distinct roles**:
 
 ### Role A — Brand Knowledge Base (Strategist)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/senso.ts` |
-| **Triggered by** | Strategist Node 2 |
-| **Env vars** | `SENSO_API_KEY` |
+|                  |                                 |
+| ---------------- | ------------------------------- |
+| **Files**        | `src/lib/integrations/senso.ts` |
+| **Triggered by** | Strategist Node 2               |
+| **Env vars**     | `SENSO_API_KEY`                 |
 
 Retrieves USPs, positioning, product lines, and brand voice to ground strategy and copy.
 
@@ -134,11 +139,11 @@ Retrieves USPs, positioning, product lines, and brand voice to ground strategy a
 
 ### Role B — cited.md Publisher (Actor)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/citedmd.ts` |
-| **Triggered by** | Actor via `src/lib/integrations/publisher.ts` |
-| **Env vars** | `SENSO_API_KEY`, `CITED_MD_GEO_QUESTION_ID`, `CITED_MD_PUBLISHER_SLUG`, `CITED_MD_BASE_URL`, `CITED_MD_INDUSTRY_SLUG` |
+|                  |                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/citedmd.ts`                                                                                     |
+| **Triggered by** | Actor via `src/lib/integrations/publisher.ts`                                                                         |
+| **Env vars**     | `SENSO_API_KEY`, `CITED_MD_GEO_QUESTION_ID`, `CITED_MD_PUBLISHER_SLUG`, `CITED_MD_BASE_URL`, `CITED_MD_INDUSTRY_SLUG` |
 
 Publishes campaign briefs via Senso's `content-engine/publish` API → live public URLs on [cited.md](https://cited.md).
 
@@ -152,22 +157,22 @@ Gymshark tenant config (`config/tenants/gymshark.yaml`) sets `owned_publish_chan
 
 ## 6. Prometheux — Vadalog Strategic Reasoning (Strategist)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/prometheux.ts` |
-| **Triggered by** | Strategist Node 3 |
-| **Env vars** | `PROMETHEUX_TOKEN`, `PROMETHEUX_BASE_URL` |
+|                  |                                           |
+| ---------------- | ----------------------------------------- |
+| **Files**        | `src/lib/integrations/prometheux.ts`      |
+| **Triggered by** | Strategist Node 3                         |
+| **Env vars**     | `PROMETHEUX_TOKEN`, `PROMETHEUX_BASE_URL` |
 
 **What it does:** Maps competitor move → counter-strategy angle with explainable rule lineage.
 
 **Four Vadalog rules:**
 
-| Rule | Trigger | Counter-strategy |
-|------|---------|------------------|
-| Rule 1 | High-severity pricing cut | Value-Driven Multi-Pack Bundle Campaign |
-| Rule 2 | Eco/bio launch | Highlight Existing Sustainable Recycled Lines |
-| Rule 3 | Flash sale | Affiliate Community Free Delivery & Accessories Hook |
-| Rule 4 | Default / other | Community Highlight & Organic Social Push |
+| Rule   | Trigger                   | Counter-strategy                                     |
+| ------ | ------------------------- | ---------------------------------------------------- |
+| Rule 1 | High-severity pricing cut | Value-Driven Multi-Pack Bundle Campaign              |
+| Rule 2 | Eco/bio launch            | Highlight Existing Sustainable Recycled Lines        |
+| Rule 3 | Flash sale                | Affiliate Community Free Delivery & Accessories Hook |
+| Rule 4 | Default / other           | Community Highlight & Organic Social Push            |
 
 **Fallback:** Same rules evaluated locally in JS when the Prometheux REST API is unavailable.
 
@@ -175,18 +180,18 @@ Gymshark tenant config (`config/tenants/gymshark.yaml`) sets `owned_publish_chan
 
 ## 7. x402 — Micropayment Rail (Monetization)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/x402.ts` |
+|                  |                                           |
+| ---------------- | ----------------------------------------- |
+| **Files**        | `src/lib/integrations/x402.ts`            |
 | **Triggered by** | Intelligence APIs, campaign strike routes |
-| **Env vars** | `X402_FACILITATOR_URL` |
+| **Env vars**     | `X402_FACILITATOR_URL`                    |
 
 **Two fee tiers:**
 
-| Fee | When | Route |
-|-----|------|-------|
-| **$0.01** | Intelligence API query | `/api/intelligence/feed`, `/api/intelligence/event/[id]` |
-| **$0.49** | Campaign publication | `/api/dashboard/trigger-strike`, `/api/dashboard/trigger-demo` |
+| Fee       | When                   | Route                                                          |
+| --------- | ---------------------- | -------------------------------------------------------------- |
+| **$0.01** | Intelligence API query | `/api/intelligence/feed`, `/api/intelligence/event/[id]`       |
+| **$0.49** | Campaign publication   | `/api/dashboard/trigger-strike`, `/api/dashboard/trigger-demo` |
 
 Returns HTTP 402 without `x-payment-proof` header. Revenue events logged to ClickHouse and shown in the dashboard Metrics Bar.
 
@@ -194,11 +199,11 @@ Returns HTTP 402 without `x-payment-proof` header. Revenue events logged to Clic
 
 ## 8. Notion — Legacy Publish Channel (Optional)
 
-| | |
-|---|---|
-| **Files** | `src/lib/integrations/notion.ts`, `src/lib/integrations/publisher.ts` |
-| **Triggered by** | Actor (for tenants with `type: notion`) |
-| **Env vars** | `NOTION_TOKEN`, `NOTION_DATABASE_ID` |
+|                  |                                                                       |
+| ---------------- | --------------------------------------------------------------------- |
+| **Files**        | `src/lib/integrations/notion.ts`, `src/lib/integrations/publisher.ts` |
+| **Triggered by** | Actor (for tenants with `type: notion`)                               |
+| **Env vars**     | `NOTION_TOKEN`, `NOTION_DATABASE_ID`                                  |
 
 Publishes structured campaign briefs to a Notion database. Gymshark now defaults to **cited.md**; Notion remains available for other tenants.
 
@@ -208,10 +213,10 @@ Publishes structured campaign briefs to a Notion database. Gymshark now defaults
 
 ## Not a Sponsor Integration
 
-| Name | Notes |
-|------|-------|
-| **Tessl** | Hackathon / repo name only — no Tessl SDK or API in the codebase |
-| **cited.md (platform)** | Publish destination delivered through Senso's content-engine API |
+| Name                      | Notes                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Tessl**                 | Hackathon / repo name only — no Tessl SDK or API in the codebase                                 |
+| **cited.md (platform)**   | Publish destination delivered through Senso's content-engine API                                 |
 | **Local `cited.md` file** | Root audit log appended by Actor for provenance tracing — separate from live cited.md publishing |
 
 ---
@@ -220,16 +225,16 @@ Publishes structured campaign briefs to a Notion database. Gymshark now defaults
 
 Every sponsor has a fallback. The platform runs with **zero API keys**:
 
-| Sponsor | Offline behavior |
-|---------|------------------|
-| Tavily | Cached snapshots in `data/snapshots/` |
+| Sponsor     | Offline behavior                           |
+| ----------- | ------------------------------------------ |
+| Tavily      | Cached snapshots in `data/snapshots/`      |
 | REE + Modal | Pre-baked receipts in `data/ree_receipts/` |
-| Gemini | Heuristics + template copy |
-| ClickHouse | `data/db_fallback.json` |
-| Senso | Local KB + mock publish URLs |
-| Prometheux | Local Vadalog JS engine |
-| x402 | Simulated payment proof |
-| Notion | Mock page URLs |
+| Gemini      | Heuristics + template copy                 |
+| ClickHouse  | `data/db_fallback.json`                    |
+| Senso       | Local KB + mock publish URLs               |
+| Prometheux  | Local Vadalog JS engine                    |
+| x402        | Simulated payment proof                    |
+| Notion      | Mock page URLs                             |
 
 Validate everything with:
 
