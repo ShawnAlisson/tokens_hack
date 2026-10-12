@@ -1,4 +1,4 @@
-# ⚡ Brand Compete — Autonomous Competitive Counter-Strike AI Platform ⚡
+# ⚡ Brand Compete -> Autonomous Competitive Counter-Strike AI Platform ⚡
 
 Brand Compete is a collaborative hackathon project that turns competitor signals into evidence-backed campaign briefs. Its pipeline ingests signals, combines them with brand context and reasoning rules, and prepares campaign responses with source citations. The demo uses Gymshark as an example brand.
 
